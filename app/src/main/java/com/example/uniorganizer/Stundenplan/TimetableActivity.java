@@ -6,6 +6,8 @@ import com.example.uniorganizer.R;
 
 public class TimetableActivity extends AppCompatActivity {
 
+    private TimetableDayFragment timetableDayFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
