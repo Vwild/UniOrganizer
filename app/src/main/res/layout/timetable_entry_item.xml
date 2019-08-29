@@ -1,7 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/entry_item_deleteButton"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_delete_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_entry_item_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView_entry_item_description"
+        app:layout_constraintTop_toTopOf="@+id/textView_entry_item_title" />
+
+    <TextView
+        android:id="@+id/textView_entry_item_title"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="left"
+        android:text="Android Übung"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toStartOf="@+id/entry_item_deleteButton"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_entry_item_timeperiod"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="10:00-12:00"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_entry_item_description"
+        app:layout_constraintStart_toStartOf="@+id/textView_entry_item_title"
+        app:layout_constraintTop_toTopOf="@+id/textView_entry_item_description" />
+
+    <TextView
+        android:id="@+id/textView_entry_item_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:text="Anwendungsorientierte Programmierung in H15"
+        app:layout_constraintStart_toEndOf="@+id/textView_entry_item_timeperiod"
+        app:layout_constraintTop_toBottomOf="@+id/textView_entry_item_title"
+        app:layout_constraintEnd_toStartOf="@+id/entry_item_deleteButton"/>
 
 </android.support.constraint.ConstraintLayout>
