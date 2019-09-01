@@ -3,4 +3,6 @@
     <string name="string_editText_entryname">Name der Veranstaltung ...</string>
     <string name="string_editText_description">Beschreibung ...</string>
     <string name="string_button_addEntry">Hinzufügen</string>
+    <string name="string_button_stundenplan">Stundenplan hinzufügen/verändern</string>
+    <string name="string_button_freunde">Freundesliste</string>
 </resources>
