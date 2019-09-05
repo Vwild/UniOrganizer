@@ -16,10 +16,8 @@ public interface DaoAccess {
     @Query("SELECT * FROM timetableelement WHERE timetableId IN(:timetableIds)")
     List<TimetableElement>loadALllByIDs(int[] timetableIds);
 
-
     @Query("SELECT * FROM timetableelement WHERE week_day LIKE :day")
     List<TimetableElement> LoadAllLecturesByDay(String day);
-
 
     @Query("SELECT * FROM timetableelement WHERE lecture_name LIKE :name")
     TimetableElement findLectureByName(String name);

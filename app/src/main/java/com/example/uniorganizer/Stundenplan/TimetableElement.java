@@ -23,7 +23,6 @@ public class TimetableElement {
     private int beginn;
     private int ending;
 
-
     public TimetableElement(){
 
     }
@@ -40,7 +39,7 @@ public class TimetableElement {
     public int getEnding() {return ending;}
     public void setEnding( int ending){ this.ending = ending;}
     public String getWeekDay() {return weekDay;}
-    public void setWeekDay( String weekDay){ this.weekDay = weekDay;}
+    public void setWeekDay( String weekDay){ this.weekDay = weekDay; }
 
 }
 
