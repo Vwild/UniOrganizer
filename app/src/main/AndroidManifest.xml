@@ -11,13 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Stundenplan.TimetableActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Stundenplan.EditTimetableActivity" android:label="Stundenplan Activity">
+        </activity>
+        <activity android:name=".Stundenplan.MondayActivity" android:label="Monday Activity">
+        </activity>
+        <activity android:name=".Stundenplan.TuesdayActivity" android:label="Tuesday Activity">
+        </activity>
+        <activity android:name=".Stundenplan.WednesdayActivity" android:label="Wednesday Activity">
+        </activity>
+        <activity android:name=".Stundenplan.ThursdayActivity" android:label="thursday Activity">
+        </activity>
+        <activity android:name=".Stundenplan.FridayActivity" android:label="Friday Activity">
         </activity>
     </application>
 
