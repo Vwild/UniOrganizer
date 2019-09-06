@@ -11,6 +11,11 @@ import com.example.uniorganizer.R;
 
 import java.util.List;
 
+/*
+Dem Adapter muss eine ArrayList mit TimetableElements aus der Datenbank übergeben werden.
+Diese werden dann in einem Timetable_entry_item Objekt (in einer ListView) dargestellt.
+*/
+
 public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
     private List<TimetableElement> timetableEntries;
