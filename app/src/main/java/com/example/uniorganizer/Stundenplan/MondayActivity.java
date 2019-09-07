@@ -11,4 +11,10 @@ public class MondayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monday);
     }
+
+    private void instertEntryintoDatabase(String lecturename, String roomname ){
+        TimetableElement newEntry = new TimetableElement();
+        newEntry.setLectureName(lecturename);
+        newEntry.setLectureLocation(roomname);
+    }
 }
