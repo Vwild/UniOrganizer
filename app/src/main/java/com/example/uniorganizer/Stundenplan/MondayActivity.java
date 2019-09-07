@@ -87,9 +87,14 @@ public class MondayActivity extends AppCompatActivity {
 
     }
 
-    private void instertEntryintoDatabase(String lecturename, String roomname ){
+
+
+    private void insertEntryIntoDatabase(String lecturename, String roomname, int starttime, int endtime ){
         TimetableElement newEntry = new TimetableElement();
         newEntry.setLectureName(lecturename);
         newEntry.setLectureLocation(roomname);
+        newEntry.setBeginn(starttime);
+        newEntry.setEnding(endtime);
+        //TimetableDatabase.daoAccess().insertOnlyOneElement(newEntry);
     }
 }
