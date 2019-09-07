@@ -1,6 +1,7 @@
 package com.example.uniorganizer.Stundenplan;
 
 import android.arch.persistence.room.Room;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,6 +33,12 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private static final String KEY_WEEKDAY = "week_day";
     private static final String KEY_NAME = "lecture_name";
     private static final int DATABASE_VERSION = 1;
+    private static final String ENTRY_NAME = "lecture_name";
+    private static final String ENTRY_ROOM = "lecture_room";
+    private static final String ENTRY_START_H = "beginning_hour";
+    private static final String ENTRY_START_MIN = "beginning_minute";
+    private static final String ENTRY_END_H = "ending_hour";
+    private static final String ENTRY_END_MIN = "ending_minute";
 
 
 
@@ -61,7 +68,16 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     }
 
     public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes ){
+        ContentValues cv = new ContentValues();
+        cv.put(ENTRY_NAME, lecturename);
+        cv.put(ENTRY_ROOM, roomname);
+        cv.put(ENTRY_START_H, starthour);
+        cv.put(ENTRY_START_MIN, startminutes);
+        cv.put(ENTRY_END_H, endhour);
+        cv.put(ENTRY_END_MIN, endminutes);
 
+        db.insert(DATABASE_NAME, null, cv);
+        db.close();
     }
 
 
