@@ -101,7 +101,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         TimetableElement entry = timetableEntries.get(position);
 
         title.setText(entry.getLectureName());
-        //timeperiod.setText(entry.getBeginn() + " - " + entry.getEnding());
+        timeperiod.setText(entry.getBeginningHour()+":" + entry.getBeginningMinute() + " - " + entry.getEndingHour()+ ":" + entry.getEndingMinute());
         description.setText(entry.getLectureLocation());
 
         return v;
