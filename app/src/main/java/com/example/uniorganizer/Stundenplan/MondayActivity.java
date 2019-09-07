@@ -1,5 +1,6 @@
 package com.example.uniorganizer.Stundenplan;
 
+import android.arch.persistence.room.Room;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,9 @@ import android.widget.TimePicker;
 
 import com.example.uniorganizer.R;
 
+import java.util.ArrayList;
+
+import static com.example.uniorganizer.Stundenplan.TimetableDatabase.MIGRATION_1_2;
 import java.util.Calendar;
 
 
@@ -32,6 +36,9 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     Button buttonBack;
     Button buttonAddDay;
     ListView listViewDay;
+    private TimetableDatabase timetableDatabase;
+    private TimetableEntryItemAdapter adapter;
+    private ArrayList timetable;
     int hourOfDay;
     int minute;
     private boolean start;
@@ -43,6 +50,8 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monday);
+
+        initDatabase();
 
 
         findViews();
@@ -66,6 +75,12 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         buttonAddDay = (Button) findViewById(R.id.button_add_day);
         listViewDay = (ListView) findViewById(R.id.listView_day);
     }
+
+    private void initDatabase() {
+        adapter = new TimetableEntryItemAdapter(this, timetable);
+        adapter.open();
+    }
+
     private void setupViews(){
         initTimeView();
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -143,18 +158,21 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void readInput(){
-        // Auslesen des Nutzer Inputs und speichern in lokale Variable
+        // neuer thread um daten in die datenbank einzulesen
+            new Thread(new Runnable(){
+                // Auslesen des Nutzer Inputs und speichern in lokale Variable
+                String lecturename = inputLectureName.getText().toString();
+                String lectureroom = inputRoomNumber.getText().toString();
+                int beginning = Integer.parseInt(inputStartTime.getText().toString());
+                int end = Integer.parseInt(inputEndTime.getText().toString());
+                @Override
+                public void run(){
+                    //insertEntryIntoDatabase();
+                }
+            }).start();
+        }
 
-    }
-
-
-
-    private void insertEntryIntoDatabase(String lecturename, String roomname, int starttime, int endtime ){
-        TimetableElement newEntry = new TimetableElement();
-        newEntry.setLectureName(lecturename);
-        newEntry.setLectureLocation(roomname);
-        newEntry.setBeginn(starttime);
-        newEntry.setEnding(endtime);
-        //TimetableDatabase.daoAccess().insertOnlyOneElement(newEntry);
+    private void insertEntryIntoDatabase(String lecturename, String roomname, int starthour,int startminute, int endhour,int endminute ){
+        adapter.insertIntoDatabase(lecturename,roomname,starthour,startminute,endhour,endminute);
     }
 }
