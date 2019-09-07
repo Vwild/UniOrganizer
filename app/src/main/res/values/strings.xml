@@ -6,10 +6,6 @@
     <string name="string_button_stundenplan">Stundenplan hinzufügen/verändern</string>
     <string name="string_button_freunde">Freundesliste</string>
     <string name="string_edit_timetable">Stundenplan hinzufügen/verändern</string>
-    <string name="string_edit_timetable_button_hinzufügen">Veranstaltung hinzufügen</string>
-    <string name="string_edit_timetable_button_entfernen">Veranstaltung entfernen</string>
-    <string name="string_edit_timetable_button_veranstaltung_aendern">Veranstaltung ändern</string>
-    <string name="string_edit_timetable_button_reset">Stundenplan löschen</string>
     <string name="string_day_name">DayName</string>
     <string name="string_button_monday">Monday</string>
     <string name="string_button_tuesday">Tuesday</string>
@@ -18,6 +14,14 @@
     <string name="string_button_friday">Friday</string>
     <string name="string_hint_lecture_name">Lecture Name</string>
     <string name="string_hint_room_number">Room Number</string>
-    <string name="string_hint_beginning">Start</string>
-    <string name="string_hint_end">End</string>
+    <string name="string_hint_beginning">z.B 08:15</string>
+    <string name="string_hint_end">z.B 10:45</string>
+    <string name="string_hint_add_lecture">Add your lecture here</string>
+    <string name="string_hint_name">Please enter name of your lecture</string>
+    <string name="string_hint_room">Please enter the room number of your lecture</string>
+    <string name="string_hint_beginning_lecture">Beginning of your lecture</string>
+    <string name="string_hint_end_lecture">End of your lecture</string>
+    <string name="string_button_add_lecture">Add Lecture</string>
+    <string name="string_button_back">back</string>
+    <string name="string_button_add_day">Add Day</string>
 </resources>

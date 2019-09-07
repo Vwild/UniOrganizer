@@ -1,6 +1,12 @@
 package com.example.uniorganizer.Stundenplan;
 
-import android.support.v7.app.AppCompatActivity;
 
-public class TuesdayActivity extends AppCompatActivity {
+import android.os.Bundle;
+
+public class TuesdayActivity extends MondayActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        textViewDay.setText("Tuesday");
+    }
 }

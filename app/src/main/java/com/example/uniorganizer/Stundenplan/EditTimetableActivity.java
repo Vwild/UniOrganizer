@@ -36,6 +36,10 @@ public class EditTimetableActivity extends AppCompatActivity implements View.OnC
         textView = findViewById(R.id.textView);
 
         buttonMonday.setOnClickListener(this);
+        buttonTuesday.setOnClickListener(this);
+        buttonWednesday.setOnClickListener(this);
+        buttonThursday.setOnClickListener(this);
+        buttonFriday.setOnClickListener(this);
 
     }
 
