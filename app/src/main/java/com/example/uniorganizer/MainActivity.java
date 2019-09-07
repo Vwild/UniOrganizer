@@ -13,10 +13,17 @@ import android.content.Intent;
 import com.example.uniorganizer.Stundenplan.EditTimetableActivity;
 import com.example.uniorganizer.Stundenplan.FriendsActivity;
 import com.example.uniorganizer.Stundenplan.TimetableDatabase;
+import com.example.uniorganizer.Stundenplan.TimetableElement;
+import com.example.uniorganizer.Stundenplan.TimetableEntryItemAdapter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private  static  final String DATABASE_NAME = "Stundenplan";
     private TimetableDatabase timetableDatabase;
+
+    private TimetableEntryItemAdapter adapter;
+    private ArrayList timetable;
 
     protected Button buttonTimetable;
     protected Button buttonFriends;
@@ -28,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initTimetableDatabase();
+        initDatabase();
 
         //Setzen von Referenzen der Objektvariablen auf die definierten Views des Layouts der Acitivity
         buttonTimetable = findViewById(R.id.button_timetable);
@@ -71,10 +78,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intentFriends);
     }
 
-    private void initTimetableDatabase(){
-        timetableDatabase = Room.databaseBuilder(getApplicationContext(),TimetableDatabase.class, DATABASE_NAME).build();
-
+    private void initDatabase() {
+        adapter = new TimetableEntryItemAdapter(this, timetable);
+        adapter.open();
     }
-
 
 }
