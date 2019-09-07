@@ -17,6 +17,7 @@ public class EditTimetableActivity extends AppCompatActivity implements View.OnC
     protected Button buttonWednesday;
     protected Button buttonThursday;
     protected Button buttonFriday;
+    protected Button buttonBack;
     protected TextView textView;
 
 
@@ -28,18 +29,20 @@ public class EditTimetableActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_timetable);
 
-        buttonMonday = findViewById(R.id.button_monday);
-        buttonTuesday = findViewById(R.id.button_tuesday);
-        buttonWednesday = findViewById(R.id.button_wednesday);
-        buttonThursday = findViewById(R.id.button_thursday);
-        buttonFriday = findViewById(R.id.button_friday);
-        textView = findViewById(R.id.textView);
+        buttonMonday = (Button) findViewById(R.id.button_monday);
+        buttonTuesday = (Button) findViewById(R.id.button_tuesday);
+        buttonWednesday = (Button) findViewById(R.id.button_wednesday);
+        buttonThursday = (Button) findViewById(R.id.button_thursday);
+        buttonFriday = (Button )findViewById(R.id.button_friday);
+        buttonBack = (Button) findViewById(R.id.button_back);
+        textView = (TextView) findViewById(R.id.textView);
 
         buttonMonday.setOnClickListener(this);
         buttonTuesday.setOnClickListener(this);
         buttonWednesday.setOnClickListener(this);
         buttonThursday.setOnClickListener(this);
         buttonFriday.setOnClickListener(this);
+        buttonBack.setOnClickListener(this);
 
     }
 
@@ -59,6 +62,9 @@ public class EditTimetableActivity extends AppCompatActivity implements View.OnC
         }
         else if(v.getId() == R.id.button_friday){
             buttonFridayClicked();
+        }
+        else if(v.getId() == R.id.button_back){
+            buttonBackClicked();
         }
     }
 
@@ -82,5 +88,8 @@ public class EditTimetableActivity extends AppCompatActivity implements View.OnC
     private void buttonFridayClicked(){
         Intent intentFriday = new Intent(EditTimetableActivity.this, FridayActivity.class);
         startActivity(intentFriday);
+    }
+    private void buttonBackClicked(){
+        finish();
     }
 }

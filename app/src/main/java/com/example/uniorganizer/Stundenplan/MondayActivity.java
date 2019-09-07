@@ -1,22 +1,26 @@
 package com.example.uniorganizer.Stundenplan;
 
 import android.arch.persistence.room.Room;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.uniorganizer.R;
 
 import java.util.ArrayList;
 
 import static com.example.uniorganizer.Stundenplan.TimetableDatabase.MIGRATION_1_2;
+import java.util.Calendar;
 
 
-public class MondayActivity extends AppCompatActivity {
+public class MondayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
     TextView textViewDay;
     TextView textViewHintAddLecture;
@@ -35,6 +39,10 @@ public class MondayActivity extends AppCompatActivity {
     private TimetableDatabase timetableDatabase;
     private TimetableEntryItemAdapter adapter;
     private ArrayList timetable;
+    int hourOfDay;
+    int minute;
+    private boolean start;
+
 
 
 
@@ -73,6 +81,7 @@ public class MondayActivity extends AppCompatActivity {
     }
 
     private void setupViews(){
+        initTimeView();
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +101,56 @@ public class MondayActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+    private void initTimeView(){
+        inputStartTime.setFocusable(false);
+        inputStartTime.setOnClickListener(new View.OnClickListener() {
+        @Override
+            public void onClick(View v){
+                createTimePickerDialogStartTime().show();
+            }
+        });
+
+        inputEndTime.setFocusable(false);
+        inputEndTime.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                    createTimePickerDialogEndTime().show();
+                }
+        });
+    }
+
+
+    private TimePickerDialog createTimePickerDialogStartTime(){
+
+        Calendar c = Calendar.getInstance();
+        hourOfDay = c.get(Calendar.HOUR_OF_DAY);
+        minute = c.get(Calendar.MINUTE);
+        start = true;
+        return new TimePickerDialog(this,this,hourOfDay, minute, DateFormat.is24HourFormat(this));
+    }
+    private TimePickerDialog createTimePickerDialogEndTime(){
+
+        Calendar c = Calendar.getInstance();
+        hourOfDay = c.get(Calendar.HOUR_OF_DAY);
+        minute = c.get(Calendar.MINUTE);
+        start = false;
+        return new TimePickerDialog(this,this,hourOfDay, minute, DateFormat.is24HourFormat(this));
+    }
+
+
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        if (start){
+            inputStartTime.setText(hourOfDay + ":" + minute);
+        }else if(!start){
+            inputEndTime.setText(hourOfDay + ":" + minute);
+        }
+    }
+
 
     private void addDayToDatabase(){
 
