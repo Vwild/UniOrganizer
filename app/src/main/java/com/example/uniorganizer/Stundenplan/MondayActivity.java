@@ -44,6 +44,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monday);
 
+
         findViews();
         setupViews();
 
