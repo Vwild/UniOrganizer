@@ -71,7 +71,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         helper.close();
     }
 
-    public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, int weekday ){
+    public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday){
         ContentValues cv = new ContentValues();
         cv.put(ENTRY_NAME, lecturename);
         cv.put(ENTRY_ROOM, roomname);
