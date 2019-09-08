@@ -42,8 +42,12 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     int hourOfDay;
     int minute;
     private boolean start;
-    private ArrayList<TimetableEntryItem> dayList;
+    private ArrayList<TimetableElement> dayList;
     private TimetableEntryItemAdapter adapterDayList;
+    private int beginningHour;
+    private int beginningMinute;
+    private int endingHour;
+    private int endingMinute;
 
 
 
@@ -88,7 +92,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
 
         initTimeView();
-        //initListView();
+        initListView();
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,21 +157,25 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if (start){
             inputStartTime.setText(hourOfDay + ":" + minute);
+            this.beginningHour = hourOfDay;
+            this.beginningMinute = minute;
         }else if(!start){
             inputEndTime.setText(hourOfDay + ":" + minute);
+            this.endingHour = hourOfDay;
+            this.endingMinute = minute;
         }
     }
 
 
     private void addDayToDatabase(){
-        String title = inputLectureName.getText().toString();
-        String timeperiod = inputStartTime.getText().toString() + "-" + inputEndTime.getText().toString();
-        String description = inputRoomNumber.getText().toString();
+        String lectureName = inputLectureName.getText().toString();
+        String lectureRoom = inputRoomNumber.getText().toString();
+        String timeperiod = beginningHour + ":" + beginningMinute + "-" + endingHour + ":" + endingMinute;
 
 
-        if(!title.isEmpty() && !description.isEmpty() && !timeperiod.isEmpty()){
-            TimetableEntryItem timetableEntryItem = new TimetableEntryItem(title, timeperiod, description);
-            dayList.add(timetableEntryItem);
+        if(!lectureName.isEmpty() && !lectureRoom.isEmpty() && !timeperiod.isEmpty()){
+            TimetableElement timetableElement = new TimetableElement(lectureName, timeperiod, lectureRoom);
+            dayList.add(timetableElement);
             adapterDayList.notifyDataSetChanged();
             inputLectureName.setText("");
             inputRoomNumber.setText("");
@@ -176,12 +184,12 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         }
     }
 
-    /*private void initListView(){
+    private void initListView(){
         dayList = new ArrayList<>();
         adapterDayList = new TimetableEntryItemAdapter(this, dayList);
         listViewDay.setAdapter(adapterDayList);
 
-    }*/
+    }
 
     private void readInput(){
         // neuer thread um daten in die datenbank einzulesen
