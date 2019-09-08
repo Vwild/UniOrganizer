@@ -99,9 +99,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void setupViews(){
-
-
-
         initTimeView();
         initListView();
         buttonBack.setOnClickListener(new View.OnClickListener() {
