@@ -23,13 +23,8 @@ public class TimetableElement {
     private int endingHour;
     private int endingMinute;
 
-    public TimetableElement(String lecturename, String lecturelocation, int starthour, int startminute, int endhour, int endminute){
-        this.lectureName = lecturename;
-        this.lectureLocation = lecturelocation;
-        this.beginningHour = starthour;
-        this.beginningMinute = startminute;
-        this.endingHour = endhour;
-        this.endingMinute = endminute;
+    public TimetableElement(){
+
 
 
     }
