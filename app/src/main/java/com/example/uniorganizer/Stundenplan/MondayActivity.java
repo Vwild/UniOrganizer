@@ -197,6 +197,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         listViewDay.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String name = dayList.get(position).getLectureName();
                 dayList.remove(position);
                 adapterDayList.notifyDataSetChanged();
                 return true;
