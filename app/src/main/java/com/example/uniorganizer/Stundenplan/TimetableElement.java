@@ -16,11 +16,14 @@ public class TimetableElement {
     private int endingHour;
     private int endingMinute;
 
-    public TimetableElement(String lectureName, String lectureLocation, String timeperiod){
+    public TimetableElement(String lectureName, String lectureLocation, int starthour, int startminute, int endhour, int endminute){
         this.lectureName = lectureName;
         this.lectureLocation = lectureLocation;
-        this.timeperiod = timeperiod;
-
+        this.beginningHour = starthour;
+        this.beginningMinute = startminute;
+        this.endingHour = endhour;
+        this.endingMinute = endminute;
+        this.timeperiod = beginningHour + ":" + beginningMinute + "-" + endingHour + ":" + endingMinute;
 
     }
 
@@ -39,6 +42,7 @@ public class TimetableElement {
     public void setEndingHour( int ending){ this.endingHour = ending;}
     public int getEndingMinute() {return endingMinute;}
     public void setEndingMinute( int ending){ this.endingMinute = ending;}
+    public String getTimeperiod(){return this.timeperiod;}
     public String getWeekDay() {return weekDay;}
     public void setWeekDay( String weekDay){ this.weekDay = weekDay; }
 

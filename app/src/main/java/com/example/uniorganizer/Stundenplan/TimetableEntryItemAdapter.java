@@ -20,7 +20,7 @@ import com.example.uniorganizer.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.uniorganizer.Stundenplan.TimetableDatabase.MIGRATION_1_2;
+
 
 /*
 Dem Adapter muss eine ArrayList mit TimetableElements aus der Datenbank übergeben werden.
@@ -99,6 +99,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.timetable_entry_item, null);
         }
+
         //Button buttonDelete = v.findViewById(R.id.entry_item_deleteButton);
         TextView title = v.findViewById(R.id.textView_entry_item_title);
         TextView timeperiod = v.findViewById(R.id.textView_entry_item_timeperiod);
