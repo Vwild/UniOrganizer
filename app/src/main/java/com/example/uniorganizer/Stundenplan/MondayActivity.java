@@ -60,14 +60,18 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monday);
-
         initDatabase();
-
-
         findViews();
         setupViews();
+        loadEntries();
 
     }
+    public void loadEntries(){
+        adapterDayList.open();
+        adapterDayList.getEntriesByWeekday(weekday);
+        adapterDayList.close();
+    }
+
     public void setWeekday(String weekday){
         this.weekday = weekday;
     }
