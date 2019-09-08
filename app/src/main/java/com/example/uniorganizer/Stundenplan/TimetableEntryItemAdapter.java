@@ -106,4 +106,6 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
         return v;
     }
+
+
 }

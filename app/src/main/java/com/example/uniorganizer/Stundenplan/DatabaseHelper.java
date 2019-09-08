@@ -49,17 +49,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(ENTRY_NAME, lecturename);
-        cv.put(ENTRY_ROOM, roomname);
-        cv.put(ENTRY_START_H, starthour);
-        cv.put(ENTRY_START_MIN, startminutes);
-        cv.put(ENTRY_END_H, endhour);
-        cv.put(ENTRY_END_MIN, endminutes);
 
-        db.insert(DATABASE_NAME, null, cv);
-        db.close();
-    }
+
 }
