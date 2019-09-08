@@ -46,5 +46,6 @@ public class TimetableElement {
     public String getWeekDay() {return weekDay;}
     public void setWeekDay( String weekDay){ this.weekDay = weekDay; }
 
+
 }
 

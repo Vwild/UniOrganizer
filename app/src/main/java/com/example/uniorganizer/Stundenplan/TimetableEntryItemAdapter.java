@@ -95,17 +95,16 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
             v = vi.inflate(R.layout.timetable_entry_item, null);
         }
 
-        TextView title = v.findViewById(R.id.textView_entry_item_title);
-        TextView timeperiod = v.findViewById(R.id.textView_entry_item_timeperiod);
-        TextView description = v.findViewById(R.id.textView_entry_item_description);
-        TimetableElement entry = timetableEntries.get(position);
+        TimetableElement timetableElement = timetableEntries.get(position);
 
-        title.setText(entry.getLectureName());
-        timeperiod.setText(entry.getBeginningHour()+":" + entry.getBeginningMinute() + " - " + entry.getEndingHour()+ ":" + entry.getEndingMinute());
-        description.setText(entry.getLectureLocation());
-
+        if(timetableElement != null){
+            TextView title = v.findViewById(R.id.textView_entry_item_title);
+            TextView timeperiod = v.findViewById(R.id.textView_entry_item_timeperiod);
+            TextView description = v.findViewById(R.id.textView_entry_item_description);
+            title.setText(timetableElement.getLectureName());
+            timeperiod.setText(timetableElement.getBeginningHour()+":" + timetableElement.getBeginningMinute() + " - " + timetableElement.getEndingHour()+ ":" + timetableElement.getEndingMinute());
+            description.setText(timetableElement.getLectureLocation());
+        }
         return v;
     }
-
-
 }
