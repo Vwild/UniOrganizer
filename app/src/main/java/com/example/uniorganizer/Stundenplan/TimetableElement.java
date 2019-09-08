@@ -26,6 +26,7 @@ public class TimetableElement {
     public TimetableElement(){
 
 
+
     }
 
     @NonNull
