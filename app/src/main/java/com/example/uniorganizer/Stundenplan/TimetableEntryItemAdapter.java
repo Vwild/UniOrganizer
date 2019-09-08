@@ -42,8 +42,9 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
 
 
-    private SQLiteOpenHelper helper;
-    private SQLiteDatabase db;
+    TimetableDatabase db;
+    //private SQLiteOpenHelper helper;
+    //private SQLiteDatabase db;
 
 
 
@@ -52,33 +53,40 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         super(context, R.layout.timetable_entry_item,timetableEntries);
         this.context = context;
         this.timetableEntries = timetableEntries;
-        helper = new DatabaseHelper(context);
+        //helper = new DatabaseHelper(context);
+        this.db = Room.databaseBuilder(context,
+                TimetableDatabase.class, DATABASE_NAME).build();
+
 
 
         }
 
         //methoden zumöffnen und schließen der datenbank
     public TimetableEntryItemAdapter open()throws SQLiteException {
-        db = helper.getWritableDatabase();
+        //db = helper.getWritableDatabase();
+
         return this;
     }
 
     public void close(){
-        helper.close();
+        //helper.close();
     }
 
     public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes ){
-        ContentValues cv = new ContentValues();
-        cv.put(ENTRY_NAME, lecturename);
-        cv.put(ENTRY_ROOM, roomname);
-        cv.put(ENTRY_START_H, starthour);
-        cv.put(ENTRY_START_MIN, startminutes);
-        cv.put(ENTRY_END_H, endhour);
-        cv.put(ENTRY_END_MIN, endminutes);
-
-        db.insert(DATABASE_NAME, null, cv);
-        db.close();
+        TimetableElement entry = new TimetableElement();
+        entry.setLectureName(lecturename);
+        entry.setLectureLocation(roomname);
+        entry.setBeginningHour(starthour);
+        entry.setBeginningMinute(startminutes);
+        entry.setEndingHour(endhour);
+        entry.setEndingMinute(endminutes);
+        db.daoAccess().insertOnlyOneElement(entry);
+        //db.close();
     }
+
+
+
+
 
 
 
