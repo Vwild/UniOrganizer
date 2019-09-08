@@ -16,8 +16,6 @@ public class TimetableElement {
     private String lectureLocation;
     @ColumnInfo(name = "week_day")
     private String weekDay;
-
-
     @ColumnInfo(name = "beginning")
     //zeit als integer um probleme beim anzeigen in der Listview zu vermeiden
     private int beginningHour;
@@ -25,7 +23,13 @@ public class TimetableElement {
     private int endingHour;
     private int endingMinute;
 
-    public TimetableElement(){
+    public TimetableElement(String lecturename, String lecturelocation, int starthour, int startminute, int endhour, int endminute){
+        this.lectureName = lecturename;
+        this.lectureLocation = lecturelocation;
+        this.beginningHour = starthour;
+        this.beginningMinute = startminute;
+        this.endingHour = endhour;
+        this.endingMinute = endminute;
 
 
     }
