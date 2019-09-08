@@ -1,37 +1,32 @@
 package com.example.uniorganizer.Stundenplan;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
-@Entity
+
 public class TimetableElement {
 
-    @NonNull
-    @PrimaryKey(autoGenerate = true)
+
     private int timetableId;
-    @ColumnInfo(name = "lecture_name")
     private String lectureName;
     private String lectureLocation;
-    @ColumnInfo(name = "week_day")
+    private String timeperiod;
     private String weekDay;
-    @ColumnInfo(name = "beginning")
     //zeit als integer um probleme beim anzeigen in der Listview zu vermeiden
     private int beginningHour;
     private int beginningMinute;
     private int endingHour;
     private int endingMinute;
 
-    public TimetableElement(){
-
+    public TimetableElement(String lectureName, String lectureLocation, String timeperiod){
+        this.lectureName = lectureName;
+        this.lectureLocation = lectureLocation;
+        this.timeperiod = timeperiod;
 
 
     }
 
-    @NonNull
+
     public int getTimetableId() {return timetableId;}
-    public void setTimetableId(@NonNull int timetableId){this.timetableId = timetableId;}
+    public void setTimetableId( int timetableId){this.timetableId = timetableId;}
     public String getLectureName() {return lectureName;}
     public void setLectureName( String lectureName){ this.lectureName = lectureName;}
     public String getLectureLocation() {return lectureLocation;}

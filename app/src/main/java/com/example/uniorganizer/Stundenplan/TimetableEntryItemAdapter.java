@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.uniorganizer.R;
@@ -97,7 +98,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.timetable_entry_item, null);
         }
-
+        //Button buttonDelete = v.findViewById(R.id.entry_item_deleteButton);
         TextView title = v.findViewById(R.id.textView_entry_item_title);
         TextView timeperiod = v.findViewById(R.id.textView_entry_item_timeperiod);
         TextView description = v.findViewById(R.id.textView_entry_item_description);
