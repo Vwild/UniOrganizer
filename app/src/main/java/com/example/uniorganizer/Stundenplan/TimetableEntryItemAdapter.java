@@ -84,8 +84,9 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     }
 
     public void deleteFromDatabase(String name){
-        db.execSQL("DELETE" + "FROM" + DATABASE_NAME + "WHERE" + ENTRY_NAME + "LIKE" + name);
+        db.delete(DATABASE_NAME,ENTRY_NAME+"=" +name,null);
         Toast.makeText(context,"Data Deleted From Sqlite Database", Toast.LENGTH_LONG).show();
+        db.close();
     }
 
 
