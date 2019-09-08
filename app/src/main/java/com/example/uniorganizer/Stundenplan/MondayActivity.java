@@ -51,6 +51,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     private int beginningMinute;
     private int endingHour;
     private int endingMinute;
+    private String weekday = textViewDay.getText().toString();
 
 
 
@@ -177,11 +178,10 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
         if(!lectureName.isEmpty() && !lectureRoom.isEmpty() && !timeperiod.isEmpty()){
             adapterDayList.open();
-            adapterDayList.insertIntoDatabase(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute);
+            adapterDayList.insertIntoDatabase(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute /*,weekday*/);
             adapterDayList.close();
-            TimetableElement timetableElement = new TimetableElement(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute);
+            TimetableElement timetableElement = new TimetableElement(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute, weekday);
             dayList.add(timetableElement);
-
             adapterDayList.notifyDataSetChanged();
             inputLectureName.setText("");
             inputRoomNumber.setText("");
@@ -198,6 +198,11 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String name = dayList.get(position).getLectureName();
+
+                adapterDayList.open();
+                adapterDayList.deleteFromDatabase(name);
+                adapterDayList.close();
+
                 dayList.remove(position);
                 adapterDayList.notifyDataSetChanged();
                 return true;

@@ -16,7 +16,7 @@ public class TimetableElement {
     private int endingHour;
     private int endingMinute;
 
-    public TimetableElement(String lectureName, String lectureLocation, int starthour, int startminute, int endhour, int endminute){
+    public TimetableElement(String lectureName, String lectureLocation, int starthour, int startminute, int endhour, int endminute, String weekday){
         this.lectureName = lectureName;
         this.lectureLocation = lectureLocation;
         this.beginningHour = starthour;
@@ -24,6 +24,7 @@ public class TimetableElement {
         this.endingHour = endhour;
         this.endingMinute = endminute;
         this.timeperiod = beginningHour + ":" + beginningMinute + "-" + endingHour + ":" + endingMinute;
+        this.weekDay = weekday;
 
     }
 
