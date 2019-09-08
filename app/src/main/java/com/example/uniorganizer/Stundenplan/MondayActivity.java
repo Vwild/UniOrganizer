@@ -108,7 +108,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         buttonAddLecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readInput();
+                addDayToDatabase();
             }
         });
     }
@@ -177,6 +177,8 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
             adapterDayList.open();
             adapterDayList.insertIntoDatabase(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute);
             adapterDayList.close();
+            TimetableElement timetableElement = new TimetableElement();
+            dayList.add(timetableElement);
             adapterDayList.notifyDataSetChanged();
             inputLectureName.setText("");
             inputRoomNumber.setText("");
