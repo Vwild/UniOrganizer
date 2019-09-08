@@ -178,7 +178,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
         if(!lectureName.isEmpty() && !lectureRoom.isEmpty() && !timeperiod.isEmpty()){
             adapterDayList.open();
-            adapterDayList.insertIntoDatabase(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute);
+            adapterDayList.insertIntoDatabase(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute /*,weekday*/);
             adapterDayList.close();
             TimetableElement timetableElement = new TimetableElement(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute, weekday);
             dayList.add(timetableElement);
