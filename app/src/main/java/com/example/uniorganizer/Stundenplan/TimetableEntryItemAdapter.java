@@ -42,7 +42,8 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
 
 
-    TimetableDatabase db;
+    Ti db = Room.databaseBuilder(getApplicationContext(),
+            AppDatabase.class, "database-name").build();
     //private SQLiteOpenHelper helper;
     //private SQLiteDatabase db;
 
@@ -54,9 +55,6 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         this.context = context;
         this.timetableEntries = timetableEntries;
         //helper = new DatabaseHelper(context);
-        this.db = Room.databaseBuilder(context,
-                TimetableDatabase.class, DATABASE_NAME).build();
-
 
 
         }
@@ -64,7 +62,6 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         //methoden zumöffnen und schließen der datenbank
     public TimetableEntryItemAdapter open()throws SQLiteException {
         //db = helper.getWritableDatabase();
-
         return this;
     }
 
@@ -73,20 +70,29 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     }
 
     public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes ){
-        TimetableElement entry = new TimetableElement();
-        entry.setLectureName(lecturename);
-        entry.setLectureLocation(roomname);
-        entry.setBeginningHour(starthour);
-        entry.setBeginningMinute(startminutes);
-        entry.setEndingHour(endhour);
-        entry.setEndingMinute(endminutes);
-        db.daoAccess().insertOnlyOneElement(entry);
-        //db.close();
+        ContentValues cv = new ContentValues();
+        cv.put(ENTRY_NAME, lecturename);
+        cv.put(ENTRY_ROOM, roomname);
+        cv.put(ENTRY_START_H, starthour);
+        cv.put(ENTRY_START_MIN, startminutes);
+        cv.put(ENTRY_END_H, endhour);
+        cv.put(ENTRY_END_MIN, endminutes);
+
+        db.insert(DATABASE_NAME, null, cv);
+        db.close();
+
+       public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes ){
+            ContentValues cv = new ContentValues();
+            cv.put(ENTRY_NAME, lecturename);
+            cv.put(ENTRY_ROOM, roomname);
+            cv.put(ENTRY_START_H, starthour);
+            cv.put(ENTRY_START_MIN, startminutes);
+            cv.put(ENTRY_END_H, endhour);
+            cv.put(ENTRY_END_MIN, endminutes);
+
+            db.insert(DATABASE_NAME, null, cv);
+            db.close();
     }
-
-
-
-
 
 
 
@@ -103,16 +109,17 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
             v = vi.inflate(R.layout.timetable_entry_item, null);
         }
 
-        TimetableElement timetableElement = timetableEntries.get(position);
+        TextView title = v.findViewById(R.id.textView_entry_item_title);
+        TextView timeperiod = v.findViewById(R.id.textView_entry_item_timeperiod);
+        TextView description = v.findViewById(R.id.textView_entry_item_description);
+        TimetableElement entry = timetableEntries.get(position);
 
-        if(timetableElement != null){
-            TextView title = v.findViewById(R.id.textView_entry_item_title);
-            TextView timeperiod = v.findViewById(R.id.textView_entry_item_timeperiod);
-            TextView description = v.findViewById(R.id.textView_entry_item_description);
-            title.setText(timetableElement.getLectureName());
-            timeperiod.setText(timetableElement.getBeginningHour()+":" + timetableElement.getBeginningMinute() + " - " + timetableElement.getEndingHour()+ ":" + timetableElement.getEndingMinute());
-            description.setText(timetableElement.getLectureLocation());
-        }
+        title.setText(entry.getLectureName());
+        timeperiod.setText(entry.getBeginningHour()+":" + entry.getBeginningMinute() + " - " + entry.getEndingHour()+ ":" + entry.getEndingMinute());
+        description.setText(entry.getLectureLocation());
+
         return v;
     }
+
+
 }
