@@ -10,7 +10,7 @@ import java.util.List;
 @Dao
 public interface DaoAccess {
 
-
+/*
     @Query("SELECT * FROM timetableelement")
     List<TimetableElement>getAll();
 
@@ -38,5 +38,5 @@ public interface DaoAccess {
 
     @Delete
     void deleteAll(TimetableElement...timetableElements);
-
+        */
     }

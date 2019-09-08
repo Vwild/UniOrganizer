@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -16,7 +18,7 @@ import com.example.uniorganizer.R;
 
 import java.util.ArrayList;
 
-import static com.example.uniorganizer.Stundenplan.TimetableDatabase.MIGRATION_1_2;
+
 import java.util.Calendar;
 
 
@@ -35,8 +37,9 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     Button buttonAddLecture;
     Button buttonBack;
     Button buttonAddDay;
+    ImageButton itemDeleteButton;
     ListView listViewDay;
-    private TimetableDatabase timetableDatabase;
+
     private TimetableEntryItemAdapter adapterDatabase;
     private ArrayList timetable;
     int hourOfDay;
@@ -170,15 +173,15 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     private void addDayToDatabase(){
         String lectureName = inputLectureName.getText().toString();
         String lectureRoom = inputRoomNumber.getText().toString();
-        String timeperiod = beginningHour + ":" + beginningMinute + "-" + endingHour + ":" + endingMinute;
-
+        String timeperiod = inputStartTime.getText().toString() + "-" + inputEndTime.getText().toString();
 
         if(!lectureName.isEmpty() && !lectureRoom.isEmpty() && !timeperiod.isEmpty()){
-            //adapterDayList.open();
+            adapterDayList.open();
             adapterDayList.insertIntoDatabase(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute);
-            //adapterDayList.close();
-            TimetableElement timetableElement = new TimetableElement();
+            adapterDayList.close();
+            TimetableElement timetableElement = new TimetableElement(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute);
             dayList.add(timetableElement);
+
             adapterDayList.notifyDataSetChanged();
             inputLectureName.setText("");
             inputRoomNumber.setText("");
@@ -191,6 +194,15 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         dayList = new ArrayList<>();
         adapterDayList = new TimetableEntryItemAdapter(this, dayList);
         listViewDay.setAdapter(adapterDayList);
+        listViewDay.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String name = dayList.get(position).getLectureName();
+                dayList.remove(position);
+                adapterDayList.notifyDataSetChanged();
+                return true;
+            }
+        });
 
     }
 

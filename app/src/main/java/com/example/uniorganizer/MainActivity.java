@@ -1,6 +1,5 @@
 package com.example.uniorganizer;
 
-import android.arch.persistence.room.Room;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.content.Intent;
 
 import com.example.uniorganizer.Stundenplan.EditTimetableActivity;
 import com.example.uniorganizer.Stundenplan.FriendsActivity;
-import com.example.uniorganizer.Stundenplan.TimetableDatabase;
 import com.example.uniorganizer.Stundenplan.TimetableElement;
 import com.example.uniorganizer.Stundenplan.TimetableEntryItemAdapter;
 
@@ -20,10 +18,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private  static  final String DATABASE_NAME = "Stundenplan";
-    private TimetableDatabase timetableDatabase;
+    //private TimetableDatabase timetableDatabase;
 
     private TimetableEntryItemAdapter adapter;
-    private ArrayList timetable;
+    private ArrayList<TimetableElement> timetable;
 
     protected Button buttonTimetable;
     protected Button buttonFriends;
