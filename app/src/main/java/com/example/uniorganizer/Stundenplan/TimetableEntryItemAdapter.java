@@ -31,7 +31,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
     private List<TimetableElement> timetableEntries;
     private Context context;
-    private  static  final String DATABASE_NAME = "Stundenplan";
+    private static final String DATABASE_NAME = "Stundenplan";
     private static final String KEY_WEEKDAY = "week_day";
     private static final String KEY_NAME = "lecture_name";
     private static final int DATABASE_VERSION = 1;
@@ -44,34 +44,30 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private static final String ENTRY_WEEKDAY = "week_day";
 
 
-
-
     private SQLiteOpenHelper helper;
     private SQLiteDatabase db;
 
 
-
-
-    public TimetableEntryItemAdapter (Context context, List<TimetableElement> timetableEntries){
-        super(context, R.layout.timetable_entry_item,timetableEntries);
+    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries) {
+        super(context, R.layout.timetable_entry_item, timetableEntries);
         this.context = context;
         this.timetableEntries = timetableEntries;
         helper = new DatabaseHelper(context);
 
 
-        }
+    }
 
-        //methoden zumöffnen und schließen der datenbank
-    public TimetableEntryItemAdapter open()throws SQLiteException {
+    //methoden zumöffnen und schließen der datenbank
+    public TimetableEntryItemAdapter open() throws SQLiteException {
         db = helper.getWritableDatabase();
         return this;
     }
 
-    public void close(){
+    public void close() {
         helper.close();
     }
 
-    public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, int weekday ){
+    public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday) {
         ContentValues cv = new ContentValues();
         cv.put(ENTRY_NAME, lecturename);
         cv.put(ENTRY_ROOM, roomname);
@@ -79,17 +75,24 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         cv.put(ENTRY_START_MIN, startminutes);
         cv.put(ENTRY_END_H, endhour);
         cv.put(ENTRY_END_MIN, endminutes);
-        cv.put(ENTRY_WEEKDAY,weekday);
+        cv.put(ENTRY_WEEKDAY, weekday);
         db.insert(DATABASE_NAME, null, cv);
-        Toast.makeText(context,"Data Inserted To Sqlite Database", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Data Inserted To Sqlite Database", Toast.LENGTH_LONG).show();
         db.close();
     }
 
-    public void deleteFromDatabase(String name){
-        db.delete(DATABASE_NAME,ENTRY_NAME+"=?",new String[]{name});
-        Toast.makeText(context,"Data Deleted From Sqlite Database", Toast.LENGTH_LONG).show();
+    public void deleteFromDatabase(String name) {
+        db.delete(DATABASE_NAME, ENTRY_NAME + "=?", new String[]{name});
+        Toast.makeText(context, "Data Deleted From Sqlite Database", Toast.LENGTH_LONG).show();
         db.close();
     }
+
+    public void getEntriesByWeekday(String weekday) {
+
+        db.execSQL("SELECT" +"FROM"+ DATABASE_NAME +"WHERE"+ KEY_WEEKDAY +"="+ weekday);
+
+    }
+
 
 
 
