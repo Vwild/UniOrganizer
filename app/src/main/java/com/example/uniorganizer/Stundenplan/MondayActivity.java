@@ -37,11 +37,13 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     Button buttonAddDay;
     ListView listViewDay;
     private TimetableDatabase timetableDatabase;
-    private TimetableEntryItemAdapter adapter;
+    private TimetableEntryItemAdapter adapterDatabase;
     private ArrayList timetable;
     int hourOfDay;
     int minute;
     private boolean start;
+    private ArrayList<TimetableEntryItem> dayList;
+    private TimetableEntryItemAdapter adapterDayList;
 
 
 
@@ -77,12 +79,16 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void initDatabase() {
-        adapter = new TimetableEntryItemAdapter(this, timetable);
-        adapter.open();
+        adapterDatabase = new TimetableEntryItemAdapter(this, timetable);
+        adapterDatabase.open();
     }
 
     private void setupViews(){
+
+
+
         initTimeView();
+        //initListView();
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,8 +160,28 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
 
     private void addDayToDatabase(){
+        String title = inputLectureName.getText().toString();
+        String timeperiod = inputStartTime.getText().toString() + "-" + inputEndTime.getText().toString();
+        String description = inputRoomNumber.getText().toString();
 
+
+        if(!title.isEmpty() && !description.isEmpty() && !timeperiod.isEmpty()){
+            TimetableEntryItem timetableEntryItem = new TimetableEntryItem(title, timeperiod, description);
+            dayList.add(timetableEntryItem);
+            adapterDayList.notifyDataSetChanged();
+            inputLectureName.setText("");
+            inputRoomNumber.setText("");
+            inputStartTime.setText("");
+            inputEndTime.setText("");
+        }
     }
+
+    /*private void initListView(){
+        dayList = new ArrayList<>();
+        adapterDayList = new TimetableEntryItemAdapter(this, dayList);
+        listViewDay.setAdapter(adapterDayList);
+
+    }*/
 
     private void readInput(){
         // neuer thread um daten in die datenbank einzulesen
@@ -173,6 +199,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         }
 
     private void insertEntryIntoDatabase(String lecturename, String roomname, int starthour,int startminute, int endhour,int endminute ){
-        adapter.insertIntoDatabase(lecturename,roomname,starthour,startminute,endhour,endminute);
+        adapterDatabase.insertIntoDatabase(lecturename,roomname,starthour,startminute,endhour,endminute);
     }
 }
