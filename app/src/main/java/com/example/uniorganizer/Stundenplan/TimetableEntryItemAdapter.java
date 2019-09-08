@@ -77,19 +77,21 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         cv.put(ENTRY_END_MIN, endminutes);
         cv.put(ENTRY_WEEKDAY, weekday);
         db.insert(DATABASE_NAME, null, cv);
-        Toast.makeText(context, "Data Inserted To Sqlite Database", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Data Inserted To SQLite Database", Toast.LENGTH_LONG).show();
         db.close();
     }
 
     public void deleteFromDatabase(String name) {
         db.delete(DATABASE_NAME, ENTRY_NAME + "=?", new String[]{name});
-        Toast.makeText(context, "Data Deleted From Sqlite Database", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Data Deleted From SQLite Database", Toast.LENGTH_LONG).show();
         db.close();
     }
 
     public void getEntriesByWeekday(String weekday) {
 
-        db.execSQL("SELECT" +"FROM"+ DATABASE_NAME +"WHERE"+ KEY_WEEKDAY +"="+ weekday);
+        db.execSQL("SELECT" +"FROM"+ DATABASE_NAME +"WHERE"+ KEY_WEEKDAY +"="+ weekday +"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC");
+        db.close();
+
 
     }
 
