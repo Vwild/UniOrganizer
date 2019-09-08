@@ -8,5 +8,6 @@ public class ThursdayActivity extends WednesdayActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         textViewDay.setText("Thursday");
+        super.setWeekday("Thursday");
     }
 }
