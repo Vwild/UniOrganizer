@@ -13,7 +13,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_WEEKDAY = "week_day";
     private static final String KEY_NAME = "lecture_name";
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_CREATE = "create table " + DATABASE_NAME + " (_id integer primary key autoincrement, " + KEY_WEEKDAY + " text not null, " + KEY_NAME + " text not null);";
+    private static final String DATABASE_CREATE = "create table " + DATABASE_NAME + " (_id integer primary key autoincrement, " + KEY_NAME + " text not null, " + KEY_WEEKDAY + " text not null);";
+    private static final String DATABASE_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DATABASE_NAME;
     private static final String ENTRY_NAME = "lecture_name";
     private static final String ENTRY_ROOM = "lecture_room";
     private static final String ENTRY_START_H = "beginning_hour";
@@ -42,7 +43,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         //vorerst leer
+        db.execSQL(DATABASE_DELETE_ENTRIES);
+        onCreate(db);
 
+    }
+
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpgrade(db, oldVersion, newVersion);
     }
 
 

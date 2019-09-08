@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.uniorganizer.R;
 
@@ -76,12 +77,12 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         cv.put(ENTRY_START_MIN, startminutes);
         cv.put(ENTRY_END_H, endhour);
         cv.put(ENTRY_END_MIN, endminutes);
-
         db.insert(DATABASE_NAME, null, cv);
+        Toast.makeText(context,"Data Inserted To Sqlite Database", Toast.LENGTH_LONG).show();
         db.close();
-
-
     }
+
+
 
 
 
