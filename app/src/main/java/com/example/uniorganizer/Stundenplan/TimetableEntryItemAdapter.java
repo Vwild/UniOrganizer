@@ -41,6 +41,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private static final String ENTRY_START_MIN = "beginning_minute";
     private static final String ENTRY_END_H = "ending_hour";
     private static final String ENTRY_END_MIN = "ending_minute";
+    private static final String ENTRY_WEEKDAY = "week_day";
 
 
 
@@ -70,7 +71,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         helper.close();
     }
 
-    public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes ){
+    public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, int weekday ){
         ContentValues cv = new ContentValues();
         cv.put(ENTRY_NAME, lecturename);
         cv.put(ENTRY_ROOM, roomname);
@@ -78,6 +79,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         cv.put(ENTRY_START_MIN, startminutes);
         cv.put(ENTRY_END_H, endhour);
         cv.put(ENTRY_END_MIN, endminutes);
+        cv.put(ENTRY_WEEKDAY,weekday);
         db.insert(DATABASE_NAME, null, cv);
         Toast.makeText(context,"Data Inserted To Sqlite Database", Toast.LENGTH_LONG).show();
         db.close();
