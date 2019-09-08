@@ -68,6 +68,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     }
 
     public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday) {
+        db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(ENTRY_NAME, lecturename);
         cv.put(ENTRY_ROOM, roomname);
@@ -82,6 +83,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     }
 
     public void deleteFromDatabase(String name) {
+        db = helper.getWritableDatabase();
         db.delete(DATABASE_NAME, ENTRY_NAME + "=?", new String[]{name});
         Toast.makeText(context, "Data Deleted From SQLite Database", Toast.LENGTH_LONG).show();
         db.close();
@@ -89,6 +91,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
     public void getEntriesByWeekday(String weekday) {
 
+        db = helper.getReadableDatabase();
         db.execSQL("SELECT" +"FROM"+ DATABASE_NAME +"WHERE"+ KEY_WEEKDAY +"="+ weekday +"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC");
         db.close();
 
