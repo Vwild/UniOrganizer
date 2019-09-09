@@ -1,9 +1,9 @@
 package com.example.uniorganizer.Stundenplan;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;

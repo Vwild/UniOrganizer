@@ -1,9 +1,8 @@
 package com.example.uniorganizer.Stundenplan;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,13 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniorganizer.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
