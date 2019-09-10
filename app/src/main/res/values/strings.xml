@@ -33,4 +33,6 @@
     <string name="string_textView_login">Enter Username and Password</string>
     <string name="string_textView_create_new_account">Don\'t have an Account already ?</string>
     <string name="string_textView_register_link">Register</string>
+    <string name="string_editText_searchFriend">Search by Username ...</string>
+    <string name="string_button_searchFriend">Search</string>
 </resources>
