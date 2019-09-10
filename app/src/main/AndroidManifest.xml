@@ -41,7 +41,7 @@
             android:label="UniOrganizer: Friday" />
         <activity
             android:name=".Friendtransaction.FriendsActivity"
-            android:label="UniOrganizer: Friendlist" />
+            android:label="Present at Uni ... " />
     </application>
 
 </manifest>
