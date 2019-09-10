@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "930127306840",
+    "firebase_url": "https://uniorganizer-bbf10.firebaseio.com",
+    "project_id": "uniorganizer-bbf10",
+    "storage_bucket": "uniorganizer-bbf10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930127306840:android:9dcd6d0538ab80451eea2d",
+        "android_client_info": {
+          "package_name": "com.example.uniorganizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930127306840-0ujs8r99ati0ud1v67eulni8sdslchdh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uniorganizer",
+            "certificate_hash": "5dd169eef4770333be76627dbbcc87f488c3e82b"
+          }
+        },
+        {
+          "client_id": "930127306840-7ber33guoionm8h5vmusa2h06h36oloj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhqDDg_mr5V1W9kUbmzVX2aHx--t31rko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930127306840-7ber33guoionm8h5vmusa2h06h36oloj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
