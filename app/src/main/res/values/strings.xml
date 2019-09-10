@@ -25,8 +25,12 @@
     <string name="string_button_back">back</string>
     <string name="string_button_add_day">Add Day</string>
     <string name="string_button_register">Register</string>
-    <string name="string_hint_enter_username">Username</string>
-    <string name="string_hint_enter_password">Password</string>
-    <string name="string_hint_enter_email">Email</string>
-    <string name="string_textView_register">Enter Username, Password and Email</string>
+    <string name="string_hint_set_username">Username</string>
+    <string name="string_hint_set_password">Password</string>
+    <string name="string_hint_set_email">Email</string>
+    <string name="string_textView_register">Set Username, Password and Email</string>
+    <string name="string_button_login">Login</string>
+    <string name="string_textView_login">Enter Username and Password</string>
+    <string name="string_textView_create_new_account">Don\'t have an Account already ?</string>
+    <string name="string_textView_register_link">Register</string>
 </resources>

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.uniorganizer">
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Friendtransaction.ActivityRegister"></activity>
+        <activity android:name=".Friendtransaction.ActivityLogin"></activity>
+        <activity android:name=".Friendtransaction.ActivityRegister" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,25 +23,25 @@
         </activity>
         <activity
             android:name=".Stundenplan.EditTimetableActivity"
-            android:label="UniOrganizer: Stundenplan"></activity>
+            android:label="UniOrganizer: Stundenplan" />
         <activity
             android:name=".Stundenplan.MondayActivity"
-            android:label="UniOrganizer: Monday"></activity>
+            android:label="UniOrganizer: Monday" />
         <activity
             android:name=".Stundenplan.TuesdayActivity"
-            android:label="UniOrganizer: Tuesday "></activity>
+            android:label="UniOrganizer: Tuesday " />
         <activity
             android:name=".Stundenplan.WednesdayActivity"
-            android:label="UniOrganizer: Wednesday"></activity>
+            android:label="UniOrganizer: Wednesday" />
         <activity
             android:name=".Stundenplan.ThursdayActivity"
-            android:label="UniOrganizer: Thursday "></activity>
+            android:label="UniOrganizer: Thursday " />
         <activity
             android:name=".Stundenplan.FridayActivity"
-            android:label="UniOrganizer: Friday"></activity>
+            android:label="UniOrganizer: Friday" />
         <activity
-            android:name=".Stundenplan.FriendsActivity"
-            android:label="UniOrganizer: Friendlist"></activity>
+            android:name=".Friendtransaction.FriendsActivity"
+            android:label="UniOrganizer: Friendlist" />
     </application>
 
 </manifest>
