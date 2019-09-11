@@ -9,12 +9,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.uniorganizer.R;
@@ -27,20 +26,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class FriendsActivity extends AppCompatActivity {
 
+    private static final String KEY_PRESENT_AT_UNI = "presentAtUni";
+
     Button buttonBack ,buttonSearch;
     EditText editTextSearch;
     ListView listViewUsers;
-    Switch switchPresent;
 
     private DatabaseReference reference;
     private ArrayList<User> users ;
     private UserItemAdapter adapter;
     private User myAccount;
-
+    private boolean myPresenceStatus;
 
 
     @Override
@@ -53,32 +55,47 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (FirebaseAuth.getInstance().getCurrentUser()== null){
+            finish();
+        }else{
+            getMyPresenceStatus();
+            invalidateOptionsMenu();
+        }
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.friendsactivity_menu,menu);
-        switchPresent = (Switch) findViewById(R.id.switchItem);
-        switchPresent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-            }
-        });
-        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseDatabase.getInstance().getReference("Users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                myAccount = dataSnapshot.getValue(User.class);
-                if (! myAccount.isPresentAtUni()){
-                    Toast.makeText(FriendsActivity.this,myAccount.getUsername(),Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        if(!myPresenceStatus){
+            menu.findItem(R.id.menu_item_present_at_uni).setChecked(false);
+        }else{
+            menu.findItem(R.id.menu_item_present_at_uni).setChecked(true);
+        }
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_item_logout :
+                FirebaseAuth.getInstance().signOut();
+                finish();
+            case R.id.menu_item_delete_account:
+                deleteAccount();
+                finish();
+            case R.id.menu_item_present_at_uni:
+                if(item.isChecked()) {
+                    item.setChecked(false);
+                    changePresenceStatus(false);
+                }else if (item.getItemId()==R.id.menu_item_present_at_uni&&!item.isChecked()){
+                    item.setChecked(true);
+                    changePresenceStatus(true);
+                }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void init(){
@@ -97,11 +114,9 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     private void setOnClicklistener() {
-
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
                 finish();
             }
         });
@@ -118,6 +133,8 @@ public class FriendsActivity extends AppCompatActivity {
         if (user == null){
             Intent intent = new Intent(FriendsActivity.this, ActivityLogin.class);
             startActivity(intent);
+        }else {
+            getMyPresenceStatus();
         }
     }
 
@@ -126,12 +143,11 @@ public class FriendsActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                users.clear();
                 for (DataSnapshot allUsers: dataSnapshot.getChildren()) {
                     users.add(allUsers.getValue(User.class));
-                    Toast.makeText(FriendsActivity.this,"updated",Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged();
                 }
-
             }
 
             @Override
@@ -139,6 +155,35 @@ public class FriendsActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void getMyPresenceStatus (){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference("Users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                myAccount = dataSnapshot.getValue(User.class);
+                if(myAccount!=null){
+                    myPresenceStatus = myAccount.isPresentAtUni();
+                }
+                invalidateOptionsMenu();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void changePresenceStatus(boolean present){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put(KEY_PRESENT_AT_UNI,present);
+        reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(map);
+    }
+
+    private void deleteAccount (){
 
     }
 }

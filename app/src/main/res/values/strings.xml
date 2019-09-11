@@ -35,4 +35,7 @@
     <string name="string_textView_register_link">Register</string>
     <string name="string_editText_searchFriend">Search by Username ...</string>
     <string name="string_button_searchFriend">Search</string>
+    <string name="string_menu_item_present_at_uni">Present at Uni</string>
+    <string name="string_menu_item_logout">Logout</string>
+    <string name="string_menu_item_delete_account">Delete Account</string>
 </resources>
