@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.uniorganizer.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,16 +29,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class FriendsActivity extends AppCompatActivity {
 
     private static final String KEY_PRESENT_AT_UNI = "presentAtUni";
 
-    Button buttonBack ,buttonSearch;
-    EditText editTextSearch;
-    ListView listViewUsers;
+    private Button buttonBack ,buttonSearch;
+    private EditText editTextSearch;
+    private ListView listViewUsers;
 
     private DatabaseReference reference;
     private ArrayList<User> users ;
@@ -57,7 +58,7 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (FirebaseAuth.getInstance().getCurrentUser()== null){
+        if (FirebaseAuth.getInstance().getCurrentUser() == null){
             finish();
         }else{
             getMyPresenceStatus();
@@ -71,11 +72,12 @@ public class FriendsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.friendsactivity_menu,menu);
         if(!myPresenceStatus){
             menu.findItem(R.id.menu_item_present_at_uni).setChecked(false);
-        }else{
+        }else {
             menu.findItem(R.id.menu_item_present_at_uni).setChecked(true);
         }
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -83,16 +85,19 @@ public class FriendsActivity extends AppCompatActivity {
             case R.id.menu_item_logout :
                 FirebaseAuth.getInstance().signOut();
                 finish();
-            case R.id.menu_item_delete_account:
+                return true;
+            case R.id.menu_item_delete_account :
                 deleteAccount();
-                finish();
-            case R.id.menu_item_present_at_uni:
+                return true;
+            case  R.id.menu_item_present_at_uni :
                 if(item.isChecked()) {
-                    item.setChecked(false);
                     changePresenceStatus(false);
+                    item.setChecked(false);
+                    return true;
                 }else if (item.getItemId()==R.id.menu_item_present_at_uni&&!item.isChecked()){
-                    item.setChecked(true);
                     changePresenceStatus(true);
+                    item.setChecked(true);
+                    return true;
                 }
         }
         return super.onOptionsItemSelected(item);
@@ -123,7 +128,7 @@ public class FriendsActivity extends AppCompatActivity {
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //do ...
+                findUsersbyName();
             }
         });
     }
@@ -158,6 +163,31 @@ public class FriendsActivity extends AppCompatActivity {
 
     }
 
+    private void findUsersbyName() {
+        String username = editTextSearch.getText().toString().trim();
+        if(username.contentEquals("")){
+            displayUsers();
+        }else {
+            reference.orderByChild("Username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    users.clear();
+                    for (DataSnapshot allUsers : dataSnapshot.getChildren()) {
+                        users.add(allUsers.getValue(User.class));
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+    }
+
     private void getMyPresenceStatus (){
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseDatabase.getInstance().getReference("Users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -184,6 +214,25 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     private void deleteAccount (){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String id = firebaseUser.getUid();
+        FirebaseAuth.getInstance().getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    reference.child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                finish();
+                            }
+                        }
+                    });
+                }else{
+                    Toast.makeText(FriendsActivity.this,"Delete failed",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 }

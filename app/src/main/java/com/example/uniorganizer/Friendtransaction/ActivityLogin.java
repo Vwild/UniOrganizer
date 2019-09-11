@@ -3,6 +3,7 @@ package com.example.uniorganizer.Friendtransaction;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class ActivityLogin extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
     private TextView register;
     private Button loginButton;
+    private ProgressDialog dialog;
 
     private FirebaseAuth firebaseAuth;
 
@@ -34,6 +37,7 @@ public class ActivityLogin extends AppCompatActivity {
         findViews();
         setOnClicklistener();
         firebaseAuth = FirebaseAuth.getInstance();
+        dialog = new ProgressDialog(ActivityLogin.this);
     }
 
     @Override
@@ -55,6 +59,8 @@ public class ActivityLogin extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.setMessage("Please wait");
+                dialog.show();
                 loginAccount();
             }
         });
@@ -76,9 +82,11 @@ public class ActivityLogin extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            dialog.dismiss();
                             Toast.makeText(ActivityLogin.this,"Logged in",Toast.LENGTH_SHORT);
                             finish();
                         }else{
+                            dialog.dismiss();
                             Toast.makeText(ActivityLogin.this,"Login failed",Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -3,6 +3,7 @@ package com.example.uniorganizer.Friendtransaction;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,13 +21,13 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class ActivityRegister extends AppCompatActivity {
 
     private Button buttonRegister;
     private EditText editTextPassword , editTextUsername , editTextEmail ;
+    private ProgressDialog dialog;
 
     FirebaseAuth firebaseAuth;
     DatabaseReference reference;
@@ -40,12 +41,15 @@ public class ActivityRegister extends AppCompatActivity {
         setOnClicklistener();
         firebaseAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
+        dialog = new ProgressDialog(ActivityRegister.this);
     }
 
     private void setOnClicklistener() {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.setMessage("Please wait");
+                dialog.show();
                 createAccount();
             }
         });
@@ -73,13 +77,15 @@ public class ActivityRegister extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
-                                        Toast.makeText(ActivityRegister.this,"ready",Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        Toast.makeText(ActivityRegister.this,"Registered",Toast.LENGTH_SHORT).show();
                                         createDBentry(Username,Email);
                                     }
 
                                 }
                             });
                 } else {
+                    dialog.dismiss();
                     Toast.makeText(ActivityRegister.this,"Failed, please try again",Toast.LENGTH_SHORT);
                 }
 
