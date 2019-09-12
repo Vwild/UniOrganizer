@@ -63,9 +63,16 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         initDatabase();
         findViews();
         setupViews();
-        loadEntries();
+
 
     }
+
+    @Override
+    protected void onResume(){
+        //loadEntries();
+        super.onResume();
+    }
+
     public void loadEntries(){
         adapterDayList.open();
         adapterDayList.getEntriesByWeekday(weekday);
