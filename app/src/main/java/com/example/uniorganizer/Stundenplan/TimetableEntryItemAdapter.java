@@ -12,13 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniorganizer.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -90,7 +88,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     }
 
     public void deleteFromDatabase(String name) {
-
+        db = helper.getWritableDatabase();
         db.delete(DATABASE_NAME, ENTRY_NAME + "=?", new String[]{name});
         Toast.makeText(context, "Data Deleted From SQLite Database", Toast.LENGTH_LONG).show();
         db.close();
