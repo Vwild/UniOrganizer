@@ -75,7 +75,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     public void loadEntries(){
-        adapterDayList.getEntriesByWeekday(weekday);
+        adapterDayList.getEntriesByWeekday();
         adapterDayList.close();
     }
 
@@ -102,7 +102,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
 
     private void initDatabase() {
-        adapterDatabase = new TimetableEntryItemAdapter(this, timetable);
+        adapterDatabase = new TimetableEntryItemAdapter(this, timetable,weekday);
         adapterDatabase.open();
 
     }
@@ -205,7 +205,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
     private void initListView(){
         dayList = new ArrayList<>();
-        adapterDayList = new TimetableEntryItemAdapter(this, dayList);
+        adapterDayList = new TimetableEntryItemAdapter(this, dayList,weekday);
         listViewDay.setAdapter(adapterDayList);
         listViewDay.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
