@@ -126,8 +126,9 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void initDaylist() {
-        dayList = timetableDatabase.daoAccess().findLecturesByWeekday(weekday);
-
+        List<TimetableDataElement> entrylist = timetableDatabase.daoAccess().findLecturesByWeekday(weekday);
+        dayList.addAll(entrylist);
+        adapterDayList.notifyDataSetChanged();
     }
 
     private void deleteEntryFromDB(TimetableDataElement timetableDataElement){
@@ -250,6 +251,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void initListView(){
+
         adapterDayList = new TimetableEntryItemAdapter(this, dayList);
         listViewDay.setAdapter(adapterDayList);
         listViewDay.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

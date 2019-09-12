@@ -13,19 +13,19 @@ public interface DaoAccess {
 
 
     @Query("SELECT * FROM timetabledataelement")
-    ArrayList<TimetableDataElement> getAll();
+    List<TimetableDataElement> getAll();
 
     @Query("SELECT * FROM timetabledataelement WHERE timetableId IN(:timetableIds)")
-    ArrayList<TimetableDataElement>loadALllByIDs(int[] timetableIds);
+    List<TimetableDataElement>loadALllByIDs(int[] timetableIds);
 
     @Query("SELECT * FROM timetabledataelement WHERE week_day LIKE :day")
-    ArrayList<TimetableDataElement> LoadAllLecturesByDay(String day);
+    List<TimetableDataElement> LoadAllLecturesByDay(String day);
 
     @Query("SELECT * FROM timetabledataelement WHERE lecture_name LIKE :name")
     TimetableDataElement findLectureByName(String name);
 
     @Query("SELECT*FROM timetabledataelement WHERE week_day LIKE :day")
-    ArrayList<TimetableDataElement> findLecturesByWeekday(String day);
+    List<TimetableDataElement> findLecturesByWeekday(String day);
 
     @Insert
     void insertOnlyOneElement(TimetableDataElement tableDataElement);
