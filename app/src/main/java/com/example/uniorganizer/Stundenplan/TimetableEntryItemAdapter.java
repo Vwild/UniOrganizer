@@ -92,7 +92,6 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         db.execSQL("SELECT"+"FROM"+DATABASE_NAME+"WHERE"+KEY_WEEKDAY+"="+weekday+"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC");
         db.close();
 
-
     }
 
 
