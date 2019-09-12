@@ -70,7 +70,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         helper.close();
     }
 
-    public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday) {
+   /* public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday) {
         db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(ENTRY_NAME, lecturename);
@@ -83,7 +83,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         db.insert(DATABASE_NAME, null, cv);
         Toast.makeText(context, "Data Inserted To SQLite Database", Toast.LENGTH_LONG).show();
         db.close();
-    }
+    }*/
 
     public void deleteFromDatabase(String name) {
         db = helper.getWritableDatabase();
