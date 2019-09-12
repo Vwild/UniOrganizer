@@ -4,6 +4,8 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -83,9 +85,9 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     public void loadEntries(){
         adapterDayList.open();
         adapterDayList.close();
-    public void loadEntries() {
 
-        adapterDayList.getEntries();
+
+       // adapterDayList.getEntries();
 
 
     }
@@ -134,8 +136,11 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
     private List<TimetableDataElement> findByWeekday() {
         List<TimetableDataElement> timetableDataElement = timetableDatabase.daoAccess().findLecturesByWeekday(weekday);
-
         return timetableDataElement;
+    }
+
+    private void deleteEntryIntoDB(TimetableDataElement timetableDataElement){
+
     }
 
 
