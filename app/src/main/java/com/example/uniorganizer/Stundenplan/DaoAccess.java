@@ -26,7 +26,6 @@ public interface DaoAccess {
     @Query("SELECT*FROM timetabledataelement WHERE week_day LIKE :day")
     List<TimetableDataElement> findLecturesByWeekday(String day);
 
-
     @Insert
     void insertOnlyOneElement(TimetableDataElement tableDataElement);
 

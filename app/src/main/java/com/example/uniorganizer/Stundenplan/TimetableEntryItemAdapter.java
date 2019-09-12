@@ -20,8 +20,6 @@ import com.example.uniorganizer.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.String.valueOf;
-
 
 
 /*
@@ -52,11 +50,11 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private SQLiteDatabase db;
 
 
-    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries ) {
+    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries) {
         super(context, R.layout.timetable_entry_item, timetableEntries);
         this.context = context;
         this.timetableEntries = timetableEntries;
-        helper = new DatabaseHelper(context);
+
 
 
 
@@ -72,55 +70,37 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         helper.close();
     }
 
-    public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday) {
-
-        helper = new DatabaseHelper(context);
-        ((DatabaseHelper) helper).insertIntoDatabase(lecturename,roomname,starthour,startminutes,endhour,endminutes,weekday);
-    }
+   /* public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday) {
+        db = helper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(ENTRY_NAME, lecturename);
+        cv.put(ENTRY_ROOM, roomname);
+        cv.put(ENTRY_START_H, starthour);
+        cv.put(ENTRY_START_MIN, startminutes);
+        cv.put(ENTRY_END_H, endhour);
+        cv.put(ENTRY_END_MIN, endminutes);
+        cv.put(ENTRY_WEEKDAY, weekday);
+        db.insert(DATABASE_NAME, null, cv);
+        Toast.makeText(context, "Data Inserted To SQLite Database", Toast.LENGTH_LONG).show();
+        db.close();
+    }*/
 
     public void deleteFromDatabase(String name) {
-
-        helper = new DatabaseHelper(context);
-        ((DatabaseHelper) helper).deleteFromDatabase(name);
+        db = helper.getWritableDatabase();
+        db.delete(DATABASE_NAME, ENTRY_NAME + "=?", new String[]{name});
+        Toast.makeText(context, "Data Deleted From SQLite Database", Toast.LENGTH_LONG).show();
+        db.close();
     }
 
-    public List<TimetableElement> getEntries() {
+    public List<TimetableElement> getEntriesByWeekday() {
 
-
-        List<TimetableElement> TimetableList = new ArrayList<>();
-
-
-        String[] columns = {ENTRY_ID, ENTRY_NAME, ENTRY_ROOM, ENTRY_START_H, ENTRY_START_MIN, ENTRY_END_H, ENTRY_END_MIN, ENTRY_WEEKDAY};
-        Cursor c = db.rawQuery("SELECT" + columns + "FROM" + DATABASE_NAME , null);
-
-        if (c.moveToFirst()){
-
-            do {
-                String name = c.getString(c.getColumnIndex(ENTRY_NAME));
-                String room = c.getString(c.getColumnIndex(ENTRY_ROOM));
-                int startH = c.getInt(c.getColumnIndex(ENTRY_START_H));
-                int startMin = c.getInt(c.getColumnIndex(ENTRY_START_MIN));
-                int endH = c.getInt(c.getColumnIndex(ENTRY_END_H));
-                int endMin = c.getInt(c.getColumnIndex(ENTRY_END_MIN));
-                String weekday = c.getString(c.getColumnIndex(ENTRY_WEEKDAY));
-                TimetableElement timetableElement = new TimetableElement(name, room, startH, startMin, endH, endMin, weekday);
-                TimetableList.add(timetableElement);
-                c.moveToNext();
-            }while (c.moveToNext());
-            c.close();
-            Toast.makeText(context, "Data Loaded From SQLite Database", Toast.LENGTH_LONG).show();
-        } else {
-            c.close();
-            Toast.makeText(context, "No Data in SQLite Database", Toast.LENGTH_LONG).show();
-        }
-        db.close();
-        return TimetableList;
+        return this.timetableEntries;
 
     }
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position,View convertView, ViewGroup parent) {
         View v = convertView;
         if (v == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -134,10 +114,11 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         TimetableElement entry = timetableEntries.get(position);
 
         title.setText(entry.getLectureName());
-        timeperiod.setText(entry.getBeginningHour() + ":" + entry.getBeginningMinute() + " - " + entry.getEndingHour() + ":" + entry.getEndingMinute());
+        timeperiod.setText(entry.getBeginningHour()+":" + entry.getBeginningMinute() + " - " + entry.getEndingHour()+ ":" + entry.getEndingMinute());
         description.setText(entry.getLectureLocation());
 
         return v;
     }
+
 
 }

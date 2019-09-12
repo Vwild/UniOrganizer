@@ -1,6 +1,5 @@
 package com.example.uniorganizer.Stundenplan;
 
-import androidx.room.Room;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 
@@ -46,6 +45,9 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     ListView listViewDay;
 
 
+    private TimetableEntryItemAdapter adapterDatabase;
+    private ArrayList timetable;
+
     private TimetableDatabase timetableDatabase;
     private static final String TAG = MondayActivity.class.getSimpleName();
     int hourOfDay;
@@ -67,17 +69,19 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         initDatabase();
         findViews();
         setupViews();
-        //loadEntries();
 
 
     }
 
     @Override
-    protected void onResume() {
-
+    protected void onResume(){
+        //loadEntries();
         super.onResume();
     }
 
+    public void loadEntries(){
+        adapterDayList.open();
+        adapterDayList.close();
     public void loadEntries() {
 
         adapterDayList.getEntries();
@@ -243,11 +247,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String name = dayList.get(position).getLectureName();
-
-                adapterDayList.open();
-                adapterDayList.deleteFromDatabase(name);
-                adapterDayList.close();
-
                 dayList.remove(position);
                 adapterDayList.notifyDataSetChanged();
                 return true;
