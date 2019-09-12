@@ -140,6 +140,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void deleteEntryIntoDB(TimetableDataElement timetableDataElement){
+        timetableDatabase.daoAccess().deleteOnlyOneElement(timetableDataElement);
 
     }
 
@@ -232,7 +233,16 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         String timeperiod = inputStartTime.getText().toString() + "-" + inputEndTime.getText().toString();
 
         if(!lectureName.isEmpty() && !lectureRoom.isEmpty() && !timeperiod.isEmpty()){
-            //insertNewEntryIntoDB(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute, weekday);
+            new Thread(new Runnable() {
+                String lectureName = inputLectureName.getText().toString();
+                String lectureRoom = inputRoomNumber.getText().toString();
+                @Override
+                public void run() {
+
+                    insertNewEntryIntoDB(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute, weekday);
+                }
+            }).start();
+
             TimetableElement timetableElement = new TimetableElement(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute, weekday);
             dayList.add(timetableElement);
             adapterDayList.notifyDataSetChanged();
