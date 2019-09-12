@@ -43,17 +43,19 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private static final String ENTRY_END_H = "ending_hour";
     private static final String ENTRY_END_MIN = "ending_minute";
     private static final String ENTRY_WEEKDAY = "week_day";
+    private List<TimetableElement> TimetableList;
 
 
     private SQLiteOpenHelper helper;
     private SQLiteDatabase db;
 
 
-    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries) {
+    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries, String weekday) {
         super(context, R.layout.timetable_entry_item, timetableEntries);
         this.context = context;
         this.timetableEntries = timetableEntries;
         helper = new DatabaseHelper(context);
+        TimetableList = ((DatabaseHelper) helper).getEntriesByWeekday(weekday);
 
 
     }
@@ -90,36 +92,9 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         db.close();
     }
 
-    public List<TimetableElement> getEntriesByWeekday(String weekday) {
+    public List<TimetableElement> getEntriesByWeekday() {
 
-
-        List<TimetableElement>TimetableList = new ArrayList<>();
-
-        String[]columns = {ENTRY_ID,ENTRY_NAME,ENTRY_ROOM,ENTRY_START_H,ENTRY_START_MIN,ENTRY_END_H,ENTRY_END_MIN,ENTRY_WEEKDAY};
-        Cursor c = db.rawQuery("SELECT" + columns + "FROM" + DATABASE_NAME + "WHERE" + ENTRY_WEEKDAY+"="+weekday,null);
-
-        if (c!=null && c.getCount() != 0){
-            c.moveToFirst();
-            while (!c.isAfterLast()){
-                String name = c.getString(c.getColumnIndex(ENTRY_NAME));
-                String room = c.getString(c.getColumnIndex(ENTRY_ROOM));
-                int startH = c.getInt(c.getColumnIndex(ENTRY_START_H));
-                int startMin = c.getInt(c.getColumnIndex(ENTRY_START_MIN));
-                int endH = c.getInt(c.getColumnIndex(ENTRY_END_H));
-                int endMin = c.getInt(c.getColumnIndex(ENTRY_END_MIN));
-                TimetableElement timetableElement = new TimetableElement(name,room,startH,startMin,endH,endMin,weekday);
-                TimetableList.add(timetableElement);
-                c.moveToNext();
-            }
-            c.close();
-            Toast.makeText(context, "Data Loaded From SQLite Database", Toast.LENGTH_LONG).show();
-        } else {
-            c.close();
-            Toast.makeText(context, "No Data in SQLite Database", Toast.LENGTH_LONG).show();
-        }
-        db.close();
-        return TimetableList;
-
+        return this.timetableEntries;
 
     }
 
