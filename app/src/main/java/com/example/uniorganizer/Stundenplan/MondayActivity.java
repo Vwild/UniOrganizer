@@ -54,7 +54,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     int hourOfDay;
     int minute;
     private boolean start;
-    private ArrayList<TimetableElement> dayList;
+    private ArrayList<TimetableDataElement> dayList;
     private TimetableEntryItemAdapter adapterDayList;
     private int beginningHour;
     private int beginningMinute;
@@ -82,15 +82,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         //loadEntries();
     }
 
-    public void loadEntries(){
-        adapterDayList.open();
-        adapterDayList.close();
-
-
-       // adapterDayList.getEntries();
-
-
-    }
 
     public void setWeekday(String weekday) {
         this.weekday = weekday;
@@ -237,7 +228,14 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
                 }
             }).start();
 
-            TimetableElement timetableElement = new TimetableElement(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute, weekday);
+            TimetableDataElement timetableElement = new TimetableDataElement();
+            timetableElement.setLectureName(lectureName);
+            timetableElement.setLectureLocation(lectureRoom);
+            timetableElement.setBeginningHour(beginningHour);
+            timetableElement.setBeginningMinute(beginningMinute);
+            timetableElement.setEndingHour(endingHour);
+            timetableElement.setEndingMinute(endingMinute);
+            timetableElement.setEndingHour(endingHour);
             dayList.add(timetableElement);
             adapterDayList.notifyDataSetChanged();
             inputLectureName.setText("");
