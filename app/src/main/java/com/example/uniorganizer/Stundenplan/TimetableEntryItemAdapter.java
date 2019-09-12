@@ -127,7 +127,6 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         c.close();
         return c;
 
-
     }
 
 
