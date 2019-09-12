@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
     //test
 
-    private static final String DATABASE_NAME = "Stundenplan";
+    public static final String DATABASE_NAME = "Stundenplan";
     private static final String ENTRY_WEEKDAY = "week_day";
     private static final String KEY_NAME = "lecture_name";
     private static final int DATABASE_VERSION = 1;
@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String ENTRY_END_H = "ending_hour";
     private static final String ENTRY_END_MIN = "ending_minute";
     private static final String ENTRY_ID = "_id";
-    private static final String DATABASE_CREATE = "create table " + DATABASE_NAME + "("+ENTRY_ID + "integer primary key autoincrement, " + ENTRY_NAME + " TEXT, " + ENTRY_ROOM + " text not null,"+ ENTRY_START_H +" text not null,"+ ENTRY_START_MIN + " text not null," + ENTRY_END_H + " text not null," + ENTRY_END_MIN + " text not null," + ENTRY_WEEKDAY+ " );";
+    private static final String DATABASE_CREATE = "create table " + DATABASE_NAME + "("+ENTRY_ID + "integer primary key autoincrement, " + ENTRY_NAME + " TEXT, " + ENTRY_ROOM + " text,"+ ENTRY_START_H +" text,"+ ENTRY_START_MIN + " text," + ENTRY_END_H + " text," + ENTRY_END_MIN + " text," + ENTRY_WEEKDAY+ " text);";
     private static final String DATABASE_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DATABASE_NAME;
 
 
