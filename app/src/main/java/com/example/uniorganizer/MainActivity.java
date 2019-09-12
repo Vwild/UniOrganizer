@@ -12,7 +12,6 @@ import android.content.Intent;
 import com.example.uniorganizer.Stundenplan.EditTimetableActivity;
 import com.example.uniorganizer.Friendtransaction.FriendsActivity;
 import com.example.uniorganizer.Stundenplan.TimetableDataElement;
-import com.example.uniorganizer.Stundenplan.TimetableElement;
 import com.example.uniorganizer.Stundenplan.TimetableEntryItemAdapter;
 
 import java.util.ArrayList;
