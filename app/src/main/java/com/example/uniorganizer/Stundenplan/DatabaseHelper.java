@@ -19,8 +19,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String ENTRY_START_MIN = "beginning_minute";
     private static final String ENTRY_END_H = "ending_hour";
     private static final String ENTRY_END_MIN = "ending_minute";
-
-    private static final String DATABASE_CREATE = "create table " + DATABASE_NAME + " (_id integer primary key autoincrement, " + ENTRY_NAME + " text not null, " + ENTRY_ROOM + " text not null,"+ ENTRY_START_H +" text not null,"+ ENTRY_START_MIN + " text not null," + ENTRY_END_H + " text not null," + ENTRY_END_MIN + " text not null," + ENTRY_WEEKDAY+" );";
+    private static final String ENTRY_ID = "_id";
+    private static final String DATABASE_CREATE = "create table " + DATABASE_NAME + "("+ENTRY_ID + "integer primary key autoincrement, " + ENTRY_NAME + " TEXT, " + ENTRY_ROOM + " text not null,"+ ENTRY_START_H +" text not null,"+ ENTRY_START_MIN + " text not null," + ENTRY_END_H + " text not null," + ENTRY_END_MIN + " text not null," + ENTRY_WEEKDAY+ " );";
     private static final String DATABASE_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DATABASE_NAME;
 
 

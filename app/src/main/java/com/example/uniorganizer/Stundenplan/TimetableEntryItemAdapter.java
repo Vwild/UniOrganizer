@@ -35,6 +35,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private static final String KEY_WEEKDAY = "week_day";
     private static final String KEY_NAME = "lecture_name";
     private static final int DATABASE_VERSION = 1;
+    private static final String ENTRY_ID = "_id";
     private static final String ENTRY_NAME = "lecture_name";
     private static final String ENTRY_ROOM = "lecture_room";
     private static final String ENTRY_START_H = "beginning_hour";
