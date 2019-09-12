@@ -1,10 +1,8 @@
 package com.example.uniorganizer.Stundenplan;
 
-import androidx.room.Room;
+import androidx.appcompat.app.AppCompatActivity;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,11 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+
+
 import com.example.uniorganizer.R;
 
 import java.util.ArrayList;
-
-
 import java.util.Calendar;
 
 //newCommit

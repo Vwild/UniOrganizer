@@ -56,7 +56,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
     }
 
-    //methoden zumöffnen und schließen der datenbank
+    //methoden zum öffnen und schließen der datenbank
     public TimetableEntryItemAdapter open() throws SQLiteException {
         db = helper.getWritableDatabase();
         return this;
