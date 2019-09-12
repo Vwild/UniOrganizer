@@ -1,12 +1,11 @@
 package com.example.uniorganizer.Stundenplan;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,11 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+
+
 import com.example.uniorganizer.R;
 
 import java.util.ArrayList;
-
-
 import java.util.Calendar;
 
 //newCommit
@@ -55,8 +54,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     private int endingHour;
     private int endingMinute;
     private String weekday = "Monday";
-
-
 
 
 
