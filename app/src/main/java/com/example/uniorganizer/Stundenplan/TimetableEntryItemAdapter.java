@@ -92,8 +92,9 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     public List<TimetableElement> getEntriesByWeekday(String weekday) {
 
         List<TimetableElement>TimetableList = new ArrayList<>();
-        String query = "SELECT"+"FROM"+DATABASE_NAME+"WHERE"+KEY_WEEKDAY+"="+weekday+"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC";
-        Cursor c = db.rawQuery(query, null);
+
+        String[]columns = {ENTRY_NAME,ENTRY_ROOM,ENTRY_START_H,ENTRY_START_MIN,ENTRY_END_H,ENTRY_END_MIN,ENTRY_WEEKDAY};
+        Cursor c = db.query(DATABASE_NAME,columns,KEY_WEEKDAY + "=?",new String[]{weekday},null,null,null,null);
         if (c!=null){
             c.moveToFirst();
             while (!c.isAfterLast()){
