@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +24,7 @@ import com.example.uniorganizer.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-//newCommit
+
 public class MondayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
     TextView textViewDay;
@@ -65,14 +66,12 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         initDatabase();
         findViews();
         setupViews();
-
-
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        //loadEntries();
+        loadEntries();
     }
 
     public void loadEntries(){

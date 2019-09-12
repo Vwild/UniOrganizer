@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+    //test
 
     public static final String DATABASE_NAME = "Stundenplan";
     private static final String ENTRY_WEEKDAY = "week_day";

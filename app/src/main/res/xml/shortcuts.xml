@@ -4,15 +4,18 @@
     <shortcut
         android:shortcutId="friendlist"
         android:enabled="true"
-        android:icon="@mipmap/ic_friendlist"
-        android:shortcutShortLabel="@string/string_shortcut_friendlist">
+        android:icon="@mipmap/ic_fiendlist"
+        android:shortcutShortLabel="@string/string_shortcut_friendlist"/>
+
 
     <intent
         android:action="android.intent.action.VIEW"
         android:targetPackage="com.example.uniorganizer.Friendtransaction"
         android:targetClass="com.example.uniorganizer.Friendtransaction.FriendsActivity"/>
 
-    </shortcut>
+    </shortcuts>
 
 
-</shortcuts>
+
+
+
