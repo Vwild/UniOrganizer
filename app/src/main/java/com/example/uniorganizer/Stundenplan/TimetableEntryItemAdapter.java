@@ -92,12 +92,13 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
     public List<TimetableElement> getEntriesByWeekday(String weekday) {
 
+
         List<TimetableElement>TimetableList = new ArrayList<>();
 
         String[]columns = {ENTRY_ID,ENTRY_NAME,ENTRY_ROOM,ENTRY_START_H,ENTRY_START_MIN,ENTRY_END_H,ENTRY_END_MIN,ENTRY_WEEKDAY};
         Cursor c = db.rawQuery("SELECT" + columns + "FROM" + DATABASE_NAME + "WHERE" + ENTRY_WEEKDAY+"="+weekday,null);
 
-        if (c!=null){
+        if (c!=null && c.getCount() != 0){
             c.moveToFirst();
             while (!c.isAfterLast()){
                 String name = c.getString(c.getColumnIndex(ENTRY_NAME));
@@ -112,6 +113,9 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
             }
             c.close();
             Toast.makeText(context, "Data Loaded From SQLite Database", Toast.LENGTH_LONG).show();
+        } else {
+            c.close();
+            Toast.makeText(context, "No Data in SQLite Database", Toast.LENGTH_LONG).show();
         }
         db.close();
         return TimetableList;
