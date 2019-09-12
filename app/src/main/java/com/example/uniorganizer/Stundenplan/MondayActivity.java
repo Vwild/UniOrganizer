@@ -41,7 +41,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     EditText inputEndTime;
     Button buttonAddLecture;
     Button buttonBack;
-    Button buttonAddDay;
+
 
     ListView listViewDay;
 
@@ -79,7 +79,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     @Override
     protected void onResume(){
         super.onResume();
-        //initDaylist();
+        initDaylist();
     }
 
 
@@ -101,7 +101,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         inputEndTime = (EditText) findViewById(R.id.editText_end_time);
         buttonAddLecture = (Button) findViewById(R.id.button_add_lecture);
         buttonBack = (Button) findViewById(R.id.button_back);
-        buttonAddDay = (Button) findViewById(R.id.button_add_day);
         listViewDay = (ListView) findViewById(R.id.listView_day);
     }
 
@@ -150,12 +149,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
             @Override
             public void onClick(View view) {
                 finish();
-            }
-        });
-        buttonAddDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addDayToDatabase();
             }
         });
         buttonAddLecture.setOnClickListener(new View.OnClickListener() {
@@ -253,12 +246,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         }
     }
 
-    private void addDayToDatabase(){
-
-    }
-
     private void initListView(){
-
         dayList = new ArrayList<>();
         adapterDayList = new TimetableEntryItemAdapter(this, dayList);
         listViewDay.setAdapter(adapterDayList);
