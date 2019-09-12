@@ -82,15 +82,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         //loadEntries();
     }
 
-    public void loadEntries(){
-        adapterDayList.open();
-        adapterDayList.close();
 
-
-       // adapterDayList.getEntries();
-
-
-    }
 
     public void setWeekday(String weekday) {
         this.weekday = weekday;

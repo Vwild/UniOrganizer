@@ -17,14 +17,14 @@ Dem Adapter muss eine ArrayList mit TimetableElements aus der Datenbank übergeb
 Diese werden dann in einem Timetable_entry_item Objekt (in einer ListView) dargestellt.
 */
 
-public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableDataElement> {
+public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
-    private List<TimetableDataElement> timetableEntries;
+    private List<TimetableElement> timetableEntries;
     private Context context;
 
 
 
-    public TimetableEntryItemAdapter(Context context, List<TimetableDataElement> timetableEntries) {
+    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries) {
         super(context,R.layout.timetable_entry_item,timetableEntries);
         this.context = context;
         this.timetableEntries = timetableEntries;
@@ -42,7 +42,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableDataElement
         TextView title = v.findViewById(R.id.textView_entry_item_title);
         TextView timeperiod = v.findViewById(R.id.textView_entry_item_timeperiod);
         TextView description = v.findViewById(R.id.textView_entry_item_description);
-        TimetableDataElement entry = timetableEntries.get(position);
+        TimetableElement entry = timetableEntries.get(position);
 
         title.setText(entry.getLectureName());
         timeperiod.setText(entry.getBeginningHour()+":" + entry.getBeginningMinute() + " - " + entry.getEndingHour()+ ":" + entry.getEndingMinute());
