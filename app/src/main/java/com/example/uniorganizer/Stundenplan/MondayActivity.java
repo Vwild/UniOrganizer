@@ -1,6 +1,5 @@
 package com.example.uniorganizer.Stundenplan;
 
-import androidx.room.Room;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 
@@ -40,6 +39,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     Button buttonAddDay;
     ImageButton itemDeleteButton;
     ListView listViewDay;
+
 
     private TimetableEntryItemAdapter adapterDatabase;
     private ArrayList timetable;

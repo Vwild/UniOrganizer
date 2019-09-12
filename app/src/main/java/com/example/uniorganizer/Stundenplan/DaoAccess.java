@@ -24,7 +24,6 @@ public interface DaoAccess {
     @Query("SELECT*FROM timetableelement WHERE week_day LIKE :day AND beginning LIKE :time")
     TimetableElement findLectureByDateAndTime(String day, int time);
 
-
     @Insert
     void insertOnlyOneElement(TimetableElement tableElement);
 
