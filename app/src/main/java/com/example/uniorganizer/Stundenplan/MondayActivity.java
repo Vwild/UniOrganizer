@@ -251,22 +251,18 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
     private void initListView(){
         dayList = new ArrayList<>();
-       // adapterDayList = new TimetableEntryItemAdapter(this, dayList);
+        adapterDayList = new TimetableEntryItemAdapter(this, dayList);
         listViewDay.setAdapter(adapterDayList);
         listViewDay.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
                 new Thread(new Runnable() {
-
                     TimetableDataElement entry = dayList.get(position);
                     @Override
                     public void run() {
-                       // deleteEntryFromDB(entry);
+                       deleteEntryFromDB(entry);
                     }
-
                 }).start();
-
-                String name = dayList.get(position).getLectureName();
                 dayList.remove(position);
                 adapterDayList.notifyDataSetChanged();
                 return true;
