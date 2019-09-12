@@ -10,17 +10,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Stundenplan";
-    private static final String KEY_WEEKDAY = "week_day";
+    private static final String ENTRY_WEEKDAY = "week_day";
     private static final String KEY_NAME = "lecture_name";
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_CREATE = "create table " + DATABASE_NAME + " (_id integer primary key autoincrement, " + KEY_NAME + " text not null, " + KEY_WEEKDAY + " text not null);";
-    private static final String DATABASE_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DATABASE_NAME;
     private static final String ENTRY_NAME = "lecture_name";
     private static final String ENTRY_ROOM = "lecture_room";
     private static final String ENTRY_START_H = "beginning_hour";
     private static final String ENTRY_START_MIN = "beginning_minute";
     private static final String ENTRY_END_H = "ending_hour";
     private static final String ENTRY_END_MIN = "ending_minute";
+
+    private static final String DATABASE_CREATE = "create table " + DATABASE_NAME + " (_id integer primary key autoincrement, " + ENTRY_NAME + " text not null, " + ENTRY_ROOM + " text not null,"+ ENTRY_START_H +" text not null,"+ ENTRY_START_MIN + " text not null," + ENTRY_END_H + " text not null," + ENTRY_END_MIN + " text not null," + ENTRY_WEEKDAY+" );";
+    private static final String DATABASE_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DATABASE_NAME;
 
 
     public DatabaseHelper(Context context) {
