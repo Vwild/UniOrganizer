@@ -260,9 +260,10 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
                 new Thread(new Runnable() {
 
+                    TimetableDataElement entry = dayList.get(position);
                     @Override
                     public void run() {
-                       // deleteEntryFromDB();
+                       // deleteEntryFromDB(entry);
                     }
 
                 }).start();
