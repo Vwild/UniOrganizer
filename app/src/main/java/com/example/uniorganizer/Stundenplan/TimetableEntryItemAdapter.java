@@ -1,10 +1,9 @@
 package com.example.uniorganizer.Stundenplan;
 
-import android.arch.persistence.room.Room;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.uniorganizer.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -62,18 +62,12 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         return this;
     }
 
-    public TimetableEntryItemAdapter openReadable() throws SQLiteException {
-        db = helper.getReadableDatabase();
-        return this;
-    }
-
-
     public void close() {
         helper.close();
     }
 
     public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday) {
-
+        db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(ENTRY_NAME, lecturename);
         cv.put(ENTRY_ROOM, roomname);
@@ -92,27 +86,34 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         db.delete(DATABASE_NAME, ENTRY_NAME + "=?", new String[]{name});
         Toast.makeText(context, "Data Deleted From SQLite Database", Toast.LENGTH_LONG).show();
         db.close();
-
     }
 
     public List<TimetableElement> getEntriesByWeekday(String weekday) {
 
-        Cursor cursor = db.rawQuery("SELECT" +"FROM"+ DATABASE_NAME +"WHERE"+ KEY_WEEKDAY+ "=?",new String[]weekday);
+        List<TimetableElement>TimetableList = new ArrayList<>();
+        String query = "SELECT"+"FROM"+DATABASE_NAME+"WHERE"+KEY_WEEKDAY+"="+weekday+"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC";
+        Cursor c = db.rawQuery(query, null);
+        if (c!=null){
+            c.moveToFirst();
+            while (!c.isAfterLast()){
+                String name = c.getString(c.getColumnIndex(ENTRY_NAME));
+                String room = c.getString(c.getColumnIndex(ENTRY_ROOM));
+                int startH = c.getInt(c.getColumnIndex(ENTRY_START_H));
+                int startMin = c.getInt(c.getColumnIndex(ENTRY_START_MIN));
+                int endH = c.getInt(c.getColumnIndex(ENTRY_END_H));
+                int endMin = c.getInt(c.getColumnIndex(ENTRY_END_MIN));
+                TimetableElement timetableElement = new TimetableElement(name,room,startH,startMin,endH,endMin,weekday);
+                TimetableList.add(timetableElement);
+                c.moveToNext();
+            }
+            c.close();
+            Toast.makeText(context, "Data Loaded From SQLite Database", Toast.LENGTH_LONG).show();
+        }
         db.close();
+        return TimetableList;
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override

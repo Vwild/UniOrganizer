@@ -1,6 +1,6 @@
 package com.example.uniorganizer.Stundenplan;
 
-import androidx.room.Room;
+
 import android.app.TimePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
