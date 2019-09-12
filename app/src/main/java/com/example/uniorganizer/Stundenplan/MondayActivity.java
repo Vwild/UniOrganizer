@@ -1,9 +1,11 @@
 package com.example.uniorganizer.Stundenplan;
 
-import androidx.room.Room;
-import android.app.TimePickerDialog;
-import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TimePickerDialog;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -15,11 +17,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+
+
 import com.example.uniorganizer.R;
 
 import java.util.ArrayList;
-
-
 import java.util.Calendar;
 
 
@@ -64,19 +66,16 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         initDatabase();
         findViews();
         setupViews();
-
-
     }
 
     @Override
     protected void onResume(){
-        //loadEntries();
         super.onResume();
+        loadEntries();
     }
 
     public void loadEntries(){
-        adapterDayList.open();
-        adapterDayList.getEntriesByWeekday(weekday);
+        adapterDayList.getEntriesByWeekday();
         adapterDayList.close();
     }
 
@@ -101,9 +100,11 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         listViewDay = (ListView) findViewById(R.id.listView_day);
     }
 
+
     private void initDatabase() {
-        adapterDatabase = new TimetableEntryItemAdapter(this, timetable);
+        adapterDatabase = new TimetableEntryItemAdapter(this, timetable,weekday);
         adapterDatabase.open();
+
     }
 
     private void setupViews(){
@@ -204,7 +205,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
     private void initListView(){
         dayList = new ArrayList<>();
-        adapterDayList = new TimetableEntryItemAdapter(this, dayList);
+        adapterDayList = new TimetableEntryItemAdapter(this, dayList,weekday);
         listViewDay.setAdapter(adapterDayList);
         listViewDay.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -237,6 +238,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
                 }
             }).start();
         }
+
 
 
 }
