@@ -2,6 +2,8 @@ package com.example.uniorganizer.Stundenplan;
 
 import android.arch.persistence.room.Room;
 import android.app.TimePickerDialog;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
@@ -56,6 +58,8 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +97,11 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         listViewDay = (ListView) findViewById(R.id.listView_day);
     }
 
+
     private void initDatabase() {
         adapterDatabase = new TimetableEntryItemAdapter(this, timetable);
         adapterDatabase.open();
+
     }
 
     private void setupViews(){
@@ -229,6 +235,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
                 }
             }).start();
         }
+
 
 
 }

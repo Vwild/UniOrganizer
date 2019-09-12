@@ -3,6 +3,7 @@ package com.example.uniorganizer.Stundenplan;
 import android.arch.persistence.room.Room;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -63,12 +64,18 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         return this;
     }
 
+    public TimetableEntryItemAdapter openReadable() throws SQLiteException {
+        db = helper.getReadableDatabase();
+        return this;
+    }
+
+
     public void close() {
         helper.close();
     }
 
     public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday) {
-        db = helper.getWritableDatabase();
+
         ContentValues cv = new ContentValues();
         cv.put(ENTRY_NAME, lecturename);
         cv.put(ENTRY_ROOM, roomname);
@@ -83,16 +90,16 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     }
 
     public void deleteFromDatabase(String name) {
-        db = helper.getWritableDatabase();
+
         db.delete(DATABASE_NAME, ENTRY_NAME + "=?", new String[]{name});
         Toast.makeText(context, "Data Deleted From SQLite Database", Toast.LENGTH_LONG).show();
         db.close();
+
     }
 
-    public void getEntriesByWeekday(String weekday) {
+    public List<TimetableElement> getEntriesByWeekday(String weekday) {
 
-        db = helper.getReadableDatabase();
-        db.execSQL("SELECT" +"FROM"+ DATABASE_NAME +"WHERE"+ KEY_WEEKDAY +"="+ weekday +"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC");
+        Cursor cursor = db.rawQuery("SELECT" +"FROM"+ DATABASE_NAME +"WHERE"+ KEY_WEEKDAY+ "=?",new String[]weekday);
         db.close();
 
 
