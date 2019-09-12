@@ -1,6 +1,6 @@
 package com.example.uniorganizer.Stundenplan;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,13 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniorganizer.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -95,6 +93,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         db = helper.getReadableDatabase();
        // Cursor c = db.query(DATABASE_NAME, columns, KEY_WEEKDAY +"=?", new String[]{String.valueOf(weekday)}, null, null, null,null);
         Cursor c = db.rawQuery("SELECT * FROM"+ DATABASE_NAME +"WHERE"+ ENTRY_WEEKDAY+"like"+weekday,null);
+        db.execSQL("SELECT"+"FROM"+DATABASE_NAME+"WHERE"+KEY_WEEKDAY+"="+weekday+"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC");
         db.close();
         String result = "";
 
