@@ -35,6 +35,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private static final String KEY_WEEKDAY = "week_day";
     private static final String KEY_NAME = "lecture_name";
     private static final int DATABASE_VERSION = 1;
+    private static final String ENTRY_ID = "_id";
     private static final String ENTRY_NAME = "lecture_name";
     private static final String ENTRY_ROOM = "lecture_room";
     private static final String ENTRY_START_H = "beginning_hour";
@@ -93,8 +94,9 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
 
         List<TimetableElement>TimetableList = new ArrayList<>();
 
-        String[]columns = {ENTRY_NAME,ENTRY_ROOM,ENTRY_START_H,ENTRY_START_MIN,ENTRY_END_H,ENTRY_END_MIN,ENTRY_WEEKDAY};
-        Cursor c = db.query(DATABASE_NAME,columns,KEY_WEEKDAY + "=?",new String[]{weekday},null,null,null,null);
+        String[]columns = {ENTRY_ID,ENTRY_NAME,ENTRY_ROOM,ENTRY_START_H,ENTRY_START_MIN,ENTRY_END_H,ENTRY_END_MIN,ENTRY_WEEKDAY};
+        Cursor c = db.query(DATABASE_NAME,columns,KEY_WEEKDAY + "="+weekday,null,null,null,null,null);
+
         if (c!=null){
             c.moveToFirst();
             while (!c.isAfterLast()){
