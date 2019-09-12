@@ -54,7 +54,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     int hourOfDay;
     int minute;
     private boolean start;
-    private ArrayList<TimetableElement> dayList;
+    private ArrayList<TimetableDataElement> dayList;
     private TimetableEntryItemAdapter adapterDayList;
     private int beginningHour;
     private int beginningMinute;
@@ -131,16 +131,10 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         return timetableDataElement;
     }
 
-    private void deleteEntryIntoDB(TimetableDataElement timetableDataElement){
+    private void deleteEntryFromDB(TimetableDataElement timetableDataElement){
         timetableDatabase.daoAccess().deleteOnlyOneElement(timetableDataElement);
 
     }
-
-
-
-
-
-
 
     private void setupViews(){
         initTimeView();
@@ -235,7 +229,14 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
                 }
             }).start();
 
-            TimetableElement timetableElement = new TimetableElement(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute, weekday);
+            TimetableDataElement timetableElement = new TimetableDataElement();
+            timetableElement.setLectureName(lectureName);
+            timetableElement.setLectureLocation(lectureRoom);
+            timetableElement.setBeginningHour(beginningHour);
+            timetableElement.setBeginningMinute(beginningMinute);
+            timetableElement.setEndingHour(endingHour);
+            timetableElement.setEndingMinute(endingMinute);
+            timetableElement.setEndingHour(endingHour);
             dayList.add(timetableElement);
             adapterDayList.notifyDataSetChanged();
             inputLectureName.setText("");
@@ -255,8 +256,14 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         listViewDay.setAdapter(adapterDayList);
         listViewDay.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String name = dayList.get(position).getLectureName();
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
+                new Thread(new Runnable() {
+                    TimetableDataElement entry = dayList.get(position);
+                    @Override
+                    public void run() {
+                       deleteEntryFromDB(entry);
+                    }
+                }).start();
                 dayList.remove(position);
                 adapterDayList.notifyDataSetChanged();
                 return true;
