@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -37,7 +36,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     Button buttonAddLecture;
     Button buttonBack;
     Button buttonAddDay;
-    ImageButton itemDeleteButton;
+
     ListView listViewDay;
 
 
@@ -70,8 +69,8 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
     @Override
     protected void onResume(){
-        //loadEntries();
         super.onResume();
+        //loadEntries();
     }
 
     public void loadEntries(){
@@ -123,7 +122,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         buttonAddLecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addDayToDatabase();
+                addLectureToListView();
             }
         });
     }
@@ -182,7 +181,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
 
-    private void addDayToDatabase(){
+    private void addLectureToListView(){
         String lectureName = inputLectureName.getText().toString();
         String lectureRoom = inputRoomNumber.getText().toString();
         String timeperiod = inputStartTime.getText().toString() + "-" + inputEndTime.getText().toString();
@@ -198,6 +197,10 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
             inputStartTime.setText("");
             inputEndTime.setText("");
         }
+    }
+
+    private void addDayToDatabase(){
+
     }
 
     private void initListView(){
