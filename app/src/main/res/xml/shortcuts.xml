@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:shortcutId="friendlist"
+        android:enabled="true"
+        android:icon="@mipmap/ic_fiendlist"
+        android:shortcutShortLabel="@string/string_shortcut_friendlist"/>
+
+
+    <intent
+        android:action="android.intent.action.VIEW"
+        android:targetPackage="com.example.uniorganizer.Friendtransaction"
+        android:targetClass="com.example.uniorganizer.Friendtransaction.FriendsActivity"/>
+
+    </shortcuts>
+
+
+
+
+
