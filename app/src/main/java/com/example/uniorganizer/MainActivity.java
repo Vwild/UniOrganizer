@@ -11,6 +11,7 @@ import android.content.Intent;
 
 import com.example.uniorganizer.Stundenplan.EditTimetableActivity;
 import com.example.uniorganizer.Friendtransaction.FriendsActivity;
+import com.example.uniorganizer.Stundenplan.TimetableDataElement;
 import com.example.uniorganizer.Stundenplan.TimetableElement;
 import com.example.uniorganizer.Stundenplan.TimetableEntryItemAdapter;
 
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //private TimetableDatabase timetableDatabase;
 
     private TimetableEntryItemAdapter adapter;
-    private ArrayList<TimetableElement> timetable;
+    private ArrayList<TimetableDataElement> timetable;
 
     protected Button buttonTimetable;
     protected Button buttonFriends;

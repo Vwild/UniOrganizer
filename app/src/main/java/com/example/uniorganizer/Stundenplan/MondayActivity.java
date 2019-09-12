@@ -79,7 +79,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     @Override
     protected void onResume(){
         super.onResume();
-        //loadEntries();
+        initDaylist();
     }
 
 
@@ -125,9 +125,9 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         timetableDatabase.daoAccess().insertOnlyOneElement(timetableDataElement);
     }
 
-    private List<TimetableDataElement> findByWeekday() {
-        List<TimetableDataElement> timetableDataElement = timetableDatabase.daoAccess().findLecturesByWeekday(weekday);
-        return timetableDataElement;
+    private void initDaylist() {
+        dayList = timetableDatabase.daoAccess().findLecturesByWeekday(weekday);
+
     }
 
     private void deleteEntryFromDB(TimetableDataElement timetableDataElement){
@@ -250,7 +250,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void initListView(){
-        dayList = new ArrayList<>();
         adapterDayList = new TimetableEntryItemAdapter(this, dayList);
         listViewDay.setAdapter(adapterDayList);
         listViewDay.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -271,20 +270,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
     }
 
-    private void readInput(){
-        // neuer thread um daten in die datenbank einzulesen
-            new Thread(new Runnable(){
-                // Auslesen des Nutzer Inputs und speichern in lokale Variable
-                String lecturename = inputLectureName.getText().toString();
-                String lectureroom = inputRoomNumber.getText().toString();
-                int beginning = Integer.parseInt(inputStartTime.getText().toString());
-                int end = Integer.parseInt(inputEndTime.getText().toString());
-                @Override
-                public void run(){
-                    //insertEntryIntoDatabase();
-                }
-            }).start();
-        }
+
 
 
 }
