@@ -23,7 +23,7 @@ import com.example.uniorganizer.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-//newCommit
+
 public class MondayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
     TextView textViewDay;
@@ -65,14 +65,12 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         initDatabase();
         findViews();
         setupViews();
-
-
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        //loadEntries();
+        loadEntries();
     }
 
     public void loadEntries(){
