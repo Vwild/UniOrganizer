@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.uniorganizer.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -88,57 +89,32 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         db.close();
     }
 
-    public Cursor getEntriesByWeekday(String weekday) throws SQLException {
-        String[] columns = new String[]{ENTRY_NAME, ENTRY_ROOM, ENTRY_START_H, ENTRY_START_MIN,ENTRY_END_H, ENTRY_END_MIN, ENTRY_WEEKDAY};
-        db = helper.getReadableDatabase();
-       // Cursor c = db.query(DATABASE_NAME, columns, KEY_WEEKDAY +"=?", new String[]{String.valueOf(weekday)}, null, null, null,null);
-        Cursor c = db.rawQuery("SELECT * FROM"+ DATABASE_NAME +"WHERE"+ ENTRY_WEEKDAY+"like"+weekday,null);
-        db.execSQL("SELECT"+"FROM"+DATABASE_NAME+"WHERE"+KEY_WEEKDAY+"="+weekday+"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC");
-        db.close();
-        String result = "";
+    public List<TimetableElement> getEntriesByWeekday(String weekday) {
 
-        int iName = c.getColumnIndex(ENTRY_NAME);
-        int iRoom = c.getColumnIndex(ENTRY_ROOM);
-        int iStartH = c.getColumnIndex(ENTRY_START_H);
-        int iStartM = c.getColumnIndex(ENTRY_START_MIN);
-        int iEndH = c.getColumnIndex(ENTRY_END_H);
-        int iEndM = c.getColumnIndex(ENTRY_END_MIN);
-        int iWeekDay = c.getColumnIndex(ENTRY_WEEKDAY);
-
-        if (c.getCount()>0) {
-
-
-            if (c.moveToFirst()) {
-                do {
-                    String Name = c.getString(iName);
-                    String Room = c.getString(iRoom);
-                    String StartH = c.getString(iStartH);
-                    String StartM = c.getString(iStartM);
-                    String EndH = c.getString(iEndH);
-                    String EndM = c.getString(iEndM);
-                    String WeekDay = c.getString(iWeekDay);
-
-                }while(c.moveToNext());
-                }
-            }else {
-            Toast.makeText(context,"No Data in SQLite Database", Toast.LENGTH_LONG).show();
-
+        List<TimetableElement>TimetableList = new ArrayList<>();
+        String query = "SELECT"+"FROM"+DATABASE_NAME+"WHERE"+KEY_WEEKDAY+"="+weekday+"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC";
+        Cursor c = db.rawQuery(query, null);
+        if (c!=null){
+            c.moveToFirst();
+            while (!c.isAfterLast()){
+                String name = c.getString(c.getColumnIndex(ENTRY_NAME));
+                String room = c.getString(c.getColumnIndex(ENTRY_ROOM));
+                int startH = c.getInt(c.getColumnIndex(ENTRY_START_H));
+                int startMin = c.getInt(c.getColumnIndex(ENTRY_START_MIN));
+                int endH = c.getInt(c.getColumnIndex(ENTRY_END_H));
+                int endMin = c.getInt(c.getColumnIndex(ENTRY_END_MIN));
+                TimetableElement timetableElement = new TimetableElement(name,room,startH,startMin,endH,endMin,weekday);
+                TimetableList.add(timetableElement);
+                c.moveToNext();
+            }
+            c.close();
+            Toast.makeText(context, "Data Loaded From SQLite Database", Toast.LENGTH_LONG).show();
         }
-        c.close();
-        return c;
+        db.close();
+        return TimetableList;
+
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override

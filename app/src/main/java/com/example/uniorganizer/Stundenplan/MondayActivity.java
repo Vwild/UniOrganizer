@@ -1,7 +1,10 @@
 package com.example.uniorganizer.Stundenplan;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.TimePickerDialog;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -99,9 +102,11 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         listViewDay = (ListView) findViewById(R.id.listView_day);
     }
 
+
     private void initDatabase() {
         adapterDatabase = new TimetableEntryItemAdapter(this, timetable);
         adapterDatabase.open();
+
     }
 
     private void setupViews(){
@@ -235,6 +240,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
                 }
             }).start();
         }
+
 
 
 }
