@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+    //test
 
     private static final String DATABASE_NAME = "Stundenplan";
     private static final String ENTRY_WEEKDAY = "week_day";
