@@ -61,7 +61,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monday);
-        initDatabase();
+        //initDatabase();
         findViews();
         setupViews();
 
@@ -76,7 +76,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
     public void loadEntries(){
         adapterDayList.open();
-        adapterDayList.getEntriesByWeekday(weekday);
         adapterDayList.close();
     }
 
@@ -101,10 +100,10 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         listViewDay = (ListView) findViewById(R.id.listView_day);
     }
 
-    private void initDatabase() {
+    /*private void initDatabase() {
         adapterDatabase = new TimetableEntryItemAdapter(this, timetable);
         adapterDatabase.open();
-    }
+    }*/
 
     private void setupViews(){
         initTimeView();

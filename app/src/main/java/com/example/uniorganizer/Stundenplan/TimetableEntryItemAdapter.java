@@ -50,12 +50,12 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private SQLiteDatabase db;
 
 
-    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries, String weekday) {
+    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries) {
         super(context, R.layout.timetable_entry_item, timetableEntries);
         this.context = context;
         this.timetableEntries = timetableEntries;
-        helper = new DatabaseHelper(context);
-        TimetableList = ((DatabaseHelper) helper).getEntriesByWeekday(weekday);
+
+
 
 
     }
