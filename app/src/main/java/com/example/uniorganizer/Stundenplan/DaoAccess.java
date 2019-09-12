@@ -5,36 +5,38 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import java.util.List;
+
 @Dao
 public interface DaoAccess {
 
-/*
-    @Query("SELECT * FROM timetableelement")
-    List<TimetableElement>getAll();
 
-    @Query("SELECT * FROM timetableelement WHERE timetableId IN(:timetableIds)")
-    List<TimetableElement>loadALllByIDs(int[] timetableIds);
+    @Query("SELECT * FROM timetabledataelement")
+    List<TimetableDataElement> getAll();
 
-    @Query("SELECT * FROM timetableelement WHERE week_day LIKE :day")
-    List<TimetableElement> LoadAllLecturesByDay(String day);
+    @Query("SELECT * FROM timetabledataelement WHERE timetableId IN(:timetableIds)")
+    List<TimetableDataElement>loadALllByIDs(int[] timetableIds);
 
-    @Query("SELECT * FROM timetableelement WHERE lecture_name LIKE :name")
-    TimetableElement findLectureByName(String name);
+    @Query("SELECT * FROM timetabledataelement WHERE week_day LIKE :day")
+    List<TimetableDataElement> LoadAllLecturesByDay(String day);
 
-    @Query("SELECT*FROM timetableelement WHERE week_day LIKE :day AND beginning LIKE :time")
-    TimetableElement findLectureByDateAndTime(String day, int time);
+    @Query("SELECT * FROM timetabledataelement WHERE lecture_name LIKE :name")
+    TimetableDataElement findLectureByName(String name);
 
+    @Query("SELECT*FROM timetabledataelement WHERE week_day LIKE :day")
+    List<TimetableDataElement> findLecturesByWeekday(String day);
 
-    @Insert
-    void insertOnlyOneElement(TimetableElement tableElement);
 
     @Insert
-    void insertAll(TimetableElement...timetableElements);
+    void insertOnlyOneElement(TimetableDataElement tableDataElement);
+
+    @Insert
+    void insertAll(TimetableDataElement...timetableDataElements);
 
     @Delete
-    void deleteOnlyOneElement(TimetableElement tableElement);
+    void deleteOnlyOneElement(TimetableDataElement tableDataElement);
 
     @Delete
-    void deleteAll(TimetableElement...timetableElements);
-        */
+    void deleteAll(TimetableDataElement...timetableDataElements);
+
     }

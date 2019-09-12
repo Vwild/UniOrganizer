@@ -17,7 +17,10 @@ import android.widget.Toast;
 
 import com.example.uniorganizer.R;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.String.valueOf;
 
 
 
@@ -34,6 +37,7 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private static final String KEY_WEEKDAY = "week_day";
     private static final String KEY_NAME = "lecture_name";
     private static final int DATABASE_VERSION = 1;
+    private static final String ENTRY_ID = "_id";
     private static final String ENTRY_NAME = "lecture_name";
     private static final String ENTRY_ROOM = "lecture_room";
     private static final String ENTRY_START_H = "beginning_hour";
@@ -41,22 +45,24 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     private static final String ENTRY_END_H = "ending_hour";
     private static final String ENTRY_END_MIN = "ending_minute";
     private static final String ENTRY_WEEKDAY = "week_day";
+    private List<TimetableElement> TimetableList;
 
 
     private SQLiteOpenHelper helper;
     private SQLiteDatabase db;
 
 
-    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries) {
+    public TimetableEntryItemAdapter(Context context, List<TimetableElement> timetableEntries ) {
         super(context, R.layout.timetable_entry_item, timetableEntries);
         this.context = context;
         this.timetableEntries = timetableEntries;
         helper = new DatabaseHelper(context);
 
 
+
     }
 
-    //methoden zumöffnen und schließen der datenbank
+    //methoden zum öffnen und schließen der datenbank
     public TimetableEntryItemAdapter open() throws SQLiteException {
         db = helper.getWritableDatabase();
         return this;
@@ -67,83 +73,54 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
     }
 
     public void insertIntoDatabase(String lecturename, String roomname, int starthour, int startminutes, int endhour, int endminutes, String weekday) {
-        db = helper.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(ENTRY_NAME, lecturename);
-        cv.put(ENTRY_ROOM, roomname);
-        cv.put(ENTRY_START_H, starthour);
-        cv.put(ENTRY_START_MIN, startminutes);
-        cv.put(ENTRY_END_H, endhour);
-        cv.put(ENTRY_END_MIN, endminutes);
-        cv.put(ENTRY_WEEKDAY, weekday);
-        db.insert(DATABASE_NAME, null, cv);
-        Toast.makeText(context, "Data Inserted To SQLite Database", Toast.LENGTH_LONG).show();
-        db.close();
+
+        helper = new DatabaseHelper(context);
+        ((DatabaseHelper) helper).insertIntoDatabase(lecturename,roomname,starthour,startminutes,endhour,endminutes,weekday);
     }
 
     public void deleteFromDatabase(String name) {
-        db = helper.getWritableDatabase();
-        db.delete(DATABASE_NAME, ENTRY_NAME + "=?", new String[]{name});
-        Toast.makeText(context, "Data Deleted From SQLite Database", Toast.LENGTH_LONG).show();
-        db.close();
+
+        helper = new DatabaseHelper(context);
+        ((DatabaseHelper) helper).deleteFromDatabase(name);
     }
 
-    public Cursor getEntriesByWeekday(String weekday) throws SQLException {
-        String[] columns = new String[]{ENTRY_NAME, ENTRY_ROOM, ENTRY_START_H, ENTRY_START_MIN,ENTRY_END_H, ENTRY_END_MIN, ENTRY_WEEKDAY};
-        db = helper.getReadableDatabase();
-       // Cursor c = db.query(DATABASE_NAME, columns, KEY_WEEKDAY +"=?", new String[]{String.valueOf(weekday)}, null, null, null,null);
-        Cursor c = db.rawQuery("SELECT * FROM"+ DATABASE_NAME +"WHERE"+ ENTRY_WEEKDAY+"like"+weekday,null);
-        db.execSQL("SELECT"+"FROM"+DATABASE_NAME+"WHERE"+KEY_WEEKDAY+"="+weekday+"ORDER BY"+ENTRY_START_H + "ASC"+","+ENTRY_START_MIN + "ASC");
-        db.close();
-        String result = "";
-
-        int iName = c.getColumnIndex(ENTRY_NAME);
-        int iRoom = c.getColumnIndex(ENTRY_ROOM);
-        int iStartH = c.getColumnIndex(ENTRY_START_H);
-        int iStartM = c.getColumnIndex(ENTRY_START_MIN);
-        int iEndH = c.getColumnIndex(ENTRY_END_H);
-        int iEndM = c.getColumnIndex(ENTRY_END_MIN);
-        int iWeekDay = c.getColumnIndex(ENTRY_WEEKDAY);
-
-        if (c.getCount()>0) {
+    public List<TimetableElement> getEntries() {
 
 
-            if (c.moveToFirst()) {
-                do {
-                    String Name = c.getString(iName);
-                    String Room = c.getString(iRoom);
-                    String StartH = c.getString(iStartH);
-                    String StartM = c.getString(iStartM);
-                    String EndH = c.getString(iEndH);
-                    String EndM = c.getString(iEndM);
-                    String WeekDay = c.getString(iWeekDay);
+        List<TimetableElement> TimetableList = new ArrayList<>();
 
-                }while(c.moveToNext());
-                }
-            }else {
-            Toast.makeText(context,"No Data in SQLite Database", Toast.LENGTH_LONG).show();
 
+        String[] columns = {ENTRY_ID, ENTRY_NAME, ENTRY_ROOM, ENTRY_START_H, ENTRY_START_MIN, ENTRY_END_H, ENTRY_END_MIN, ENTRY_WEEKDAY};
+        Cursor c = db.rawQuery("SELECT" + columns + "FROM" + DATABASE_NAME , null);
+
+        if (c.moveToFirst()){
+
+            do {
+                String name = c.getString(c.getColumnIndex(ENTRY_NAME));
+                String room = c.getString(c.getColumnIndex(ENTRY_ROOM));
+                int startH = c.getInt(c.getColumnIndex(ENTRY_START_H));
+                int startMin = c.getInt(c.getColumnIndex(ENTRY_START_MIN));
+                int endH = c.getInt(c.getColumnIndex(ENTRY_END_H));
+                int endMin = c.getInt(c.getColumnIndex(ENTRY_END_MIN));
+                String weekday = c.getString(c.getColumnIndex(ENTRY_WEEKDAY));
+                TimetableElement timetableElement = new TimetableElement(name, room, startH, startMin, endH, endMin, weekday);
+                TimetableList.add(timetableElement);
+                c.moveToNext();
+            }while (c.moveToNext());
+            c.close();
+            Toast.makeText(context, "Data Loaded From SQLite Database", Toast.LENGTH_LONG).show();
+        } else {
+            c.close();
+            Toast.makeText(context, "No Data in SQLite Database", Toast.LENGTH_LONG).show();
         }
-        c.close();
-        return c;
-
+        db.close();
+        return TimetableList;
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override
-    public View getView(int position,View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         if (v == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -157,11 +134,10 @@ public class TimetableEntryItemAdapter extends ArrayAdapter<TimetableElement> {
         TimetableElement entry = timetableEntries.get(position);
 
         title.setText(entry.getLectureName());
-        timeperiod.setText(entry.getBeginningHour()+":" + entry.getBeginningMinute() + " - " + entry.getEndingHour()+ ":" + entry.getEndingMinute());
+        timeperiod.setText(entry.getBeginningHour() + ":" + entry.getBeginningMinute() + " - " + entry.getEndingHour() + ":" + entry.getEndingMinute());
         description.setText(entry.getLectureLocation());
 
         return v;
     }
-
 
 }

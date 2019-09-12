@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,9 +22,12 @@ import java.util.ArrayList;
 
 
 import java.util.Calendar;
+import java.util.List;
 
 
-public class MondayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
+public class MondayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+
+    public static final String DATABASE_NAME = "Stundenplan";
 
     TextView textViewDay;
     TextView textViewHintAddLecture;
@@ -41,8 +45,9 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     ImageButton itemDeleteButton;
     ListView listViewDay;
 
-    private TimetableEntryItemAdapter adapterDatabase;
-    private ArrayList timetable;
+
+    private TimetableDatabase timetableDatabase;
+    private static final String TAG = MondayActivity.class.getSimpleName();
     int hourOfDay;
     int minute;
     private boolean start;
@@ -55,8 +60,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     private String weekday = "Monday";
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,27 +67,29 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         initDatabase();
         findViews();
         setupViews();
+        //loadEntries();
 
 
     }
 
     @Override
-    protected void onResume(){
-        //loadEntries();
+    protected void onResume() {
+
         super.onResume();
     }
 
-    public void loadEntries(){
-        adapterDayList.open();
-        adapterDayList.getEntriesByWeekday(weekday);
-        adapterDayList.close();
+    public void loadEntries() {
+
+        adapterDayList.getEntries();
+
+
     }
 
-    public void setWeekday(String weekday){
+    public void setWeekday(String weekday) {
         this.weekday = weekday;
     }
 
-    private void findViews(){
+    private void findViews() {
         textViewDay = (TextView) findViewById(R.id.textView_day);
         textViewHintAddLecture = (TextView) findViewById(R.id.textView_hint_add_lecture);
         textViewHintName = (TextView) findViewById(R.id.textView_hint_name);
@@ -102,9 +107,37 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void initDatabase() {
-        adapterDatabase = new TimetableEntryItemAdapter(this, timetable);
-        adapterDatabase.open();
+        timetableDatabase = Room.databaseBuilder(getApplicationContext(),
+                TimetableDatabase.class, DATABASE_NAME)
+                .fallbackToDestructiveMigration()
+                .build();
     }
+
+    private void insertNewEntryIntoDB(String name, String room, int startH, int startMin, int endH, int endMin, String weekday) {
+
+        TimetableDataElement timetableDataElement = new TimetableDataElement();
+        timetableDataElement.setLectureName(name);
+        timetableDataElement.setLectureLocation(room);
+        timetableDataElement.setBeginningHour(startH);
+        timetableDataElement.setBeginningMinute(startMin);
+        timetableDataElement.setEndingHour(endH);
+        timetableDataElement.setEndingMinute(endMin);
+        timetableDataElement.setWeekDay(weekday);
+        Log.d(TAG, "run: ");
+        timetableDatabase.daoAccess().insertOnlyOneElement(timetableDataElement);
+    }
+
+    private List<TimetableDataElement> findByWeekday() {
+        List<TimetableDataElement> timetableDataElement = timetableDatabase.daoAccess().findLecturesByWeekday(weekday);
+
+        return timetableDataElement;
+    }
+
+
+
+
+
+
 
     private void setupViews(){
         initTimeView();
