@@ -79,7 +79,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     @Override
     protected void onResume(){
         super.onResume();
-        //initDaylist();
+        initDaylist();
     }
 
 
