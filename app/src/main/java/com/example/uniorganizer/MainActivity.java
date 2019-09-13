@@ -13,6 +13,7 @@ import com.example.uniorganizer.Stundenplan.EditTimetableActivity;
 import com.example.uniorganizer.Friendtransaction.FriendsActivity;
 import com.example.uniorganizer.Stundenplan.TimetableDataElement;
 import com.example.uniorganizer.Stundenplan.TimetableEntryItemAdapter;
+import com.example.uniorganizer.Stundenplan.TuesdayFragment;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,22 +38,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //initDatabase();
 
         //Setzen von Referenzen der Objektvariablen auf die definierten Views des Layouts der Acitivity
-        buttonTimetable = findViewById(R.id.button_timetable);
-        buttonFriends = findViewById(R.id.button_friends);
-
+        buttonTimetable = (Button) findViewById(R.id.button_timetable);
+        buttonFriends = (Button) findViewById(R.id.button_friends);
 
         buttonTimetable.setOnClickListener(this);
         buttonFriends.setOnClickListener(this);
+
 
 
         //Einbetten von Fragment in Activity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
-        DayFragment fragment = new DayFragment();
+        DayFragment mondayFragment = new DayFragment();
+        //TuesdayFragment tuesdayFragment = new TuesdayFragment();
+
+
         // Fragments müssen in einem Layout (z.B. leeres FrameLayout)
         // platziert werden
-        fragmentTransaction.add(R.id.activityMainFragmentContainer, fragment);
+        fragmentTransaction.add(R.id.activityMainFragmentContainer, mondayFragment);
         // Mehrere Änderungen auf einmal möglich;
         // commit() führt Änderungen aus
         fragmentTransaction.commit();
