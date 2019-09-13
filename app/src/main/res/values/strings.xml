@@ -30,7 +30,7 @@
     <string name="string_hint_set_email">Email</string>
     <string name="string_textView_register">Set Username, Password and Email</string>
     <string name="string_button_login">Login</string>
-    <string name="string_textView_login">Enter Username and Password</string>
+    <string name="string_textView_login">Enter Email and Password</string>
     <string name="string_textView_create_new_account">Don\'t have an Account already ?</string>
     <string name="string_textView_register_link">Register</string>
     <string name="string_editText_searchFriend">Search by Username ...</string>

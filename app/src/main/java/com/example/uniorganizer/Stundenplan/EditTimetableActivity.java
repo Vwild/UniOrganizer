@@ -20,14 +20,14 @@ public class EditTimetableActivity extends AppCompatActivity implements View.OnC
     protected TextView textView;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_timetable);
+        initButtons();
+    }
 
+    private void initButtons (){
         buttonMonday = (Button) findViewById(R.id.button_monday);
         buttonTuesday = (Button) findViewById(R.id.button_tuesday);
         buttonWednesday = (Button) findViewById(R.id.button_wednesday);
@@ -48,48 +48,28 @@ public class EditTimetableActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v){
         if(v.getId() == R.id.button_monday){
-            buttonMondayClicked();
+            startDayActivity(MondayActivity.class);
         }
         else if(v.getId() == R.id.button_tuesday){
-            buttonTuesdayClicked();
+            startDayActivity(TuesdayActivity.class);
         }
         else if(v.getId() == R.id.button_wednesday){
-            buttonWednesdayClicked();
+            startDayActivity(WednesdayActivity.class);
         }
         else if(v.getId() == R.id.button_thursday){
-            buttonThursdayClicked();
+            startDayActivity(ThursdayActivity.class);
         }
         else if(v.getId() == R.id.button_friday){
-            buttonFridayClicked();
+            startDayActivity(FridayActivity.class);
         }
         else if(v.getId() == R.id.button_back){
-            buttonBackClicked();
+            finish();
         }
     }
 
-    private void buttonMondayClicked(){
-        Intent intentMonday = new Intent(EditTimetableActivity.this, MondayActivity.class);
-        startActivity(intentMonday);
-    }
-
-    private void buttonTuesdayClicked(){
-        Intent intentTuesday = new Intent(EditTimetableActivity.this, TuesdayActivity.class);
-        startActivity(intentTuesday);
-    }
-    private void buttonWednesdayClicked(){
-        Intent intentWednesday = new Intent(EditTimetableActivity.this, WednesdayActivity.class);
-        startActivity(intentWednesday);
-    }
-    private void buttonThursdayClicked(){
-        Intent intentThursday = new Intent(EditTimetableActivity.this, ThursdayActivity.class);
-        startActivity(intentThursday);
-    }
-    private void buttonFridayClicked(){
-        Intent intentFriday = new Intent(EditTimetableActivity.this, FridayActivity.class);
-        startActivity(intentFriday);
-    }
-    private void buttonBackClicked(){
-        finish();
+    private void startDayActivity (Class dayClass){
+        Intent intent = new Intent(EditTimetableActivity.this,dayClass);
+        startActivity(intent);
     }
 
 }

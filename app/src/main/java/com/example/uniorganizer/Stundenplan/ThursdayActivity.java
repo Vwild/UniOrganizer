@@ -1,7 +1,6 @@
 package com.example.uniorganizer.Stundenplan;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class ThursdayActivity extends WednesdayActivity {
     @Override

@@ -6,9 +6,7 @@ public class User {
      private String username;
      private boolean presentAtUni ;
 
-    public User(){
-
-    }
+    public User(){}
 
     public User(String email, String username) {
         this.email = email;

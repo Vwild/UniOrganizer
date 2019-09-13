@@ -1,16 +1,6 @@
 package com.example.uniorganizer.Stundenplan;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.room.Room;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +8,26 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import com.example.uniorganizer.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DayFragment extends Fragment {
-
+public class WednesdayFragment extends Fragment {
     public static final String DATABASE_NAME = "Stundenplan";
 
 
     private TextView textView;
     private ListView listView;
-    private ArrayList<TimetableDataElement> mondayList;
-    private TimetableEntryItemAdapter mondayListAdapter;
+    private ArrayList<TimetableDataElement> wednesdayList;
+    private TimetableEntryItemAdapter wednesdayListAdapter;
     private TimetableDatabase timetableDatabase;
-    private String weekday = "Monday";
+    private String weekday = "Wednesday";
 
     protected Button buttonSwitchFragmentBackward;
     protected Button buttonSwitchFragmentForward;
@@ -43,7 +36,6 @@ public class DayFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
 
@@ -54,50 +46,40 @@ public class DayFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_timetable_day, null);
         textView =   layout.findViewById(R.id.dayname_textView1);
         listView =   layout.findViewById(R.id.list_view_timetable_day);
-        buttonSwitchFragmentBackward = layout.findViewById(R.id.button_switch_fragment_backward);
-        buttonSwitchFragmentForward = layout.findViewById(R.id.button_switch_fragment_forward);
+        buttonSwitchFragmentBackward = (Button) layout.findViewById(R.id.button_switch_fragment_backward);
+        buttonSwitchFragmentForward = (Button) layout.findViewById(R.id.button_switch_fragment_forward);
         initDatabase();
         setOnClickListener();
-        mondayList = new ArrayList<>();
-        mondayListAdapter = new TimetableEntryItemAdapter(getContext(), mondayList);
-        listView.setAdapter(mondayListAdapter);
+        wednesdayList = new ArrayList<>();
+        wednesdayListAdapter = new TimetableEntryItemAdapter(getContext(), wednesdayList);
+        listView.setAdapter(wednesdayListAdapter);
 
-        textView.setText("Monday");
+        textView.setText("Wednesday");
 
 
         return layout;
     }
-
     private void setOnClickListener(){
         buttonSwitchFragmentBackward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FridayFragment friday = new FridayFragment();
-                getFragmentManager().beginTransaction().replace(R.id.activityMainFragmentContainer, friday).addToBackStack(null).commit();
-
-
-
+                getFragmentManager().beginTransaction().replace(R.id.activityMainFragmentContainer, new TuesdayFragment()).addToBackStack(null).commit();
             }
         });
         buttonSwitchFragmentForward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TuesdayFragment tuesday = new TuesdayFragment();
-                getFragmentManager().beginTransaction().replace(R.id.activityMainFragmentContainer, tuesday).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.activityMainFragmentContainer, new ThursdayFragment()).addToBackStack(null).commit();
             }
         });
     }
 
-
-
-
-
     @Override
     public void onResume(){
         super.onResume();
-        mondayList.clear();
-        initMondayList();
-        mondayListAdapter.notifyDataSetChanged();
+        wednesdayList.clear();
+        initWednesdayList();
+        wednesdayListAdapter.notifyDataSetChanged();
 
     }
 
@@ -110,14 +92,14 @@ public class DayFragment extends Fragment {
                 .build();
     }
 
-    private void initMondayList() {
+    private void initWednesdayList() {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
 
                 List<TimetableDataElement> entrylist = timetableDatabase.daoAccess().findLecturesByWeekday(weekday);
-                mondayList.addAll(entrylist);
+                wednesdayList.addAll(entrylist);
 
 
 
