@@ -1,8 +1,14 @@
 package com.example.uniorganizer;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,16 +18,20 @@ import android.content.Intent;
 import com.example.uniorganizer.Stundenplan.EditTimetableActivity;
 import com.example.uniorganizer.Friendtransaction.FriendsActivity;
 import com.example.uniorganizer.Stundenplan.TimetableDataElement;
+import com.example.uniorganizer.Stundenplan.TimetableDatabase;
 import com.example.uniorganizer.Stundenplan.TimetableEntryItemAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private  static  final String DATABASE_NAME = "Stundenplan";
-    //private TimetableDatabase timetableDatabase;
 
-    private TimetableEntryItemAdapter adapter;
-    private ArrayList<TimetableDataElement> timetable;
+
+
+
+
 
     protected Button buttonTimetable;
     protected Button buttonFriends;
@@ -33,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //initDatabase();
+
 
         //Setzen von Referenzen der Objektvariablen auf die definierten Views des Layouts der Acitivity
         buttonTimetable = findViewById(R.id.button_timetable);
@@ -76,9 +86,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intentFriends);
     }
 
-    /*private void initDatabase() {
-        adapter = new TimetableEntryItemAdapter(this, timetable);
-        adapter.open();
-    }*/
+    public void initNotifications(){
+        //coming soon
+
+
+
+
+
+    }
+
+
+
+
+
 
 }

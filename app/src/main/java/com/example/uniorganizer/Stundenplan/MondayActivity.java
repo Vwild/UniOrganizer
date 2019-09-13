@@ -46,8 +46,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     ListView listViewDay;
 
 
-    private TimetableEntryItemAdapter adapterDatabase;
-    private ArrayList timetable;
+
 
     private TimetableDatabase timetableDatabase;
     private static final String TAG = MondayActivity.class.getSimpleName();
@@ -79,7 +78,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     @Override
     protected void onResume(){
         super.onResume();
-        //initDaylist();
+        initDaylist();
     }
 
 

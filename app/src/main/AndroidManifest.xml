@@ -45,6 +45,15 @@
         <activity
             android:name=".Friendtransaction.FriendsActivity"
             android:label="Present at Uni ... " />
+        <receiver
+            android:name=".TimetableNotificationReciever"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
+        <service
+            android:name=".TimetableNotificationService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
