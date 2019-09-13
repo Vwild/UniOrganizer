@@ -112,7 +112,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void insertNewEntryIntoDB(String name, String room, int startH, int startMin, int endH, int endMin, String weekday) {
-
         TimetableDataElement timetableDataElement = new TimetableDataElement();
         timetableDataElement.setLectureName(name);
         timetableDataElement.setLectureLocation(room);
@@ -129,7 +128,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         new Thread(new Runnable() {
         @Override
         public void run() {
-
             List<TimetableDataElement> entrylist = timetableDatabase.daoAccess().findLecturesByWeekday(weekday);
             dayList.addAll(entrylist);
             adapterDayList.notifyDataSetChanged();

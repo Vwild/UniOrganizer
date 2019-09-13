@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.uniorganizer.R;
 
@@ -38,11 +37,6 @@ public class UserItemAdapter extends ArrayAdapter<User> {
         ImageView symbol = v.findViewById(R.id.symbolPresent);
 
         User user = users.get(position);
-        if (user == null){
-            Toast.makeText(context,"user null",Toast.LENGTH_SHORT).show();
-        }else if (username == null){
-            Toast.makeText(context,"textview null",Toast.LENGTH_SHORT).show();
-        }
         username.setText(user.getUsername());
         if(user.isPresentAtUni()){
             symbol.setImageResource(R.drawable.ic_school_green_24dp);
