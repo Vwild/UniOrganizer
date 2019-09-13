@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.uniorganizer.R;
@@ -27,7 +28,7 @@ public class ActivityRegister extends AppCompatActivity {
 
     private Button buttonRegister;
     private EditText editTextPassword , editTextUsername , editTextEmail ;
-    private ProgressDialog dialog;
+    private ProgressBar cycle;
 
     FirebaseAuth firebaseAuth;
     DatabaseReference reference;
@@ -41,15 +42,13 @@ public class ActivityRegister extends AppCompatActivity {
         setOnClicklistener();
         firebaseAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
-        dialog = new ProgressDialog(ActivityRegister.this);
     }
 
     private void setOnClicklistener() {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.setMessage("Please wait");
-                dialog.show();
+                cycle.setVisibility(View.VISIBLE);
                 createAccount();
             }
         });
@@ -60,6 +59,7 @@ public class ActivityRegister extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editText_set_password);
         editTextUsername = findViewById(R.id.editText_set_username);
         editTextEmail = findViewById(R.id.editText_set_email);
+        cycle = findViewById(R.id.progressBar_cycle_register);
     }
 
     private void createAccount (){
@@ -77,7 +77,7 @@ public class ActivityRegister extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
-                                        dialog.dismiss();
+                                        cycle.setVisibility(View.INVISIBLE);
                                         Toast.makeText(ActivityRegister.this,"Registered",Toast.LENGTH_SHORT).show();
                                         createDBentry(Username,Email);
                                     }
@@ -85,7 +85,7 @@ public class ActivityRegister extends AppCompatActivity {
                                 }
                             });
                 } else {
-                    dialog.dismiss();
+                    cycle.setVisibility(View.INVISIBLE);
                     Toast.makeText(ActivityRegister.this,"Failed, please try again",Toast.LENGTH_SHORT);
                 }
 
