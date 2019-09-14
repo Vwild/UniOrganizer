@@ -1,22 +1,14 @@
 package com.example.uniorganizer;
 
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import androidx.room.Room;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import com.example.uniorganizer.Stundenplan.DayFragment;
 import android.content.Intent;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,8 +21,6 @@ import com.example.uniorganizer.Stundenplan.TimetableEntryItemAdapter;
 
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -70,33 +60,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonFriends = (Button) findViewById(R.id.button_friends);
         buttonSwitchDayBackward = (Button) findViewById(R.id.button_switch_day_backward);
         buttonSwitchDayForward = (Button) findViewById(R.id.button_switch_day_forward);
-        timetableListView = (ListView) findViewById(R.id.list_view_timetable_day);
+        timetableListView = (ListView) findViewById(R.id.dayList_listView);
         dayTextView = (TextView) findViewById(R.id.textView_day);
-
+        dayTextView.setText(weekday);
+        timetable = new ArrayList<>();
         adapter = new TimetableEntryItemAdapter(this, timetable);
         timetableListView.setAdapter(adapter);
 
         buttonTimetable.setOnClickListener(this);
         buttonFriends.setOnClickListener(this);
+        buttonSwitchDayBackward.setOnClickListener(this);
+        buttonSwitchDayForward.setOnClickListener(this);
 
 
-        /*
-        //Einbetten von Fragment in Activity
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction =
-                fragmentManager.beginTransaction();
-        DayFragment mondayFragment = new DayFragment();
-        //TuesdayFragment tuesdayFragment = new TuesdayFragment();
 
 
-        // Fragments müssen in einem Layout (z.B. leeres FrameLayout)
-        // platziert werden
-        fragmentTransaction.add(R.id.activityMainFragmentContainer, mondayFragment);
-        // Mehrere Änderungen auf einmal möglich;
-        // commit() führt Änderungen aus
-        fragmentTransaction.commit();
-        */
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        timetable.clear();
+        initTimetableList();
+        adapter.notifyDataSetChanged();
     }
 
     /*@Override
@@ -127,10 +113,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intentFriends);
     }
     private void buttonSwitchDayBackwardClicked(){
-
+        switch (weekday){
+            case "Monday":
+                this.weekday = "Friday";
+                break;
+            case "Tuesday":
+                this.weekday = "Monday";
+                break;
+            case "Wednesday":
+                this.weekday = "Tuesday";
+                break;
+            case "Thursday":
+                this.weekday = "Wednesday";
+                break;
+            case "Friday":
+                this.weekday = "Thursday";
+                break;
+        }
+        dayTextView.setText(weekday);
+        timetable.clear();
+        initTimetableList();
+        adapter.notifyDataSetChanged();
     }
     private void buttonSwitchDayForwardClicked(){
-
+        switch (weekday){
+            case "Monday":
+                this.weekday = "Tuesday";
+                break;
+            case "Tuesday":
+                this.weekday = "Wednesday";
+                break;
+            case "Wednesday":
+                this.weekday = "Thursday";
+                break;
+            case "Thursday":
+                this.weekday = "Friday";
+                break;
+            case "Friday":
+                this.weekday = "Monday";
+                break;
+        }
+        dayTextView.setText(weekday);
+        timetable.clear();
+        initTimetableList();
+        adapter.notifyDataSetChanged();
     }
 
     private void initDatabase() {
@@ -149,28 +175,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 timetable.addAll(entrylist);
 
 
+            }
 
-    public void initNotifications(){
-        //coming soon
-
-
-
-
-
+        }).start();
     }
 
-    private void createNotificationChannel(String channel_name, String channel_description) {
+                private void createNotificationChannel (String channel_name, String
+                channel_description){
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = channel_name;
-            String description = channel_description;
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel(REMINDER_CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        CharSequence name = channel_name;
+                        String description = channel_description;
+                        int importance = NotificationManager.IMPORTANCE_HIGH;
+                        NotificationChannel channel = new NotificationChannel(REMINDER_CHANNEL_ID, name, importance);
+                        channel.setDescription(description);
+                        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                        notificationManager.createNotificationChannel(channel);
+                    }
+                }
+
+
 
 
 
