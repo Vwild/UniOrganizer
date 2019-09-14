@@ -23,7 +23,7 @@ public interface DaoAccess {
     @Query("SELECT * FROM timetabledataelement WHERE lecture_name LIKE :name")
     TimetableDataElement findLectureByName(String name);
 
-    @Query("SELECT*FROM timetabledataelement WHERE week_day LIKE :day")
+    @Query("SELECT*FROM timetabledataelement WHERE week_day LIKE :day ORDER BY beginning_hour ASC, beginning_minute ASC")
     List<TimetableDataElement> findLecturesByWeekday(String day);
 
     @Insert
