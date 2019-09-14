@@ -38,7 +38,7 @@
     <string name="string_menu_item_present_at_uni">Present at Uni</string>
     <string name="string_menu_item_logout">Logout</string>
     <string name="string_menu_item_delete_account">Delete Account</string>
-    <string name="string_button_switch_fragment_forward">Next</string>
-    <string name="string_button_switch_fragment_backward">Back</string>
+    <string name="string_button_switch_day_forward">Next</string>
+    <string name="string_button_switch_day_backward">Back</string>
     <string name="string_shortcut_friendlist">Friendlist</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class DayFragment extends Fragment {
     private TimetableDatabase timetableDatabase;
     private String weekday = "Monday";
 
+
     protected Button buttonSwitchFragmentBackward;
     protected Button buttonSwitchFragmentForward;
 
@@ -46,6 +48,10 @@ public class DayFragment extends Fragment {
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -57,7 +63,7 @@ public class DayFragment extends Fragment {
         buttonSwitchFragmentBackward = layout.findViewById(R.id.button_switch_fragment_backward);
         buttonSwitchFragmentForward = layout.findViewById(R.id.button_switch_fragment_forward);
         initDatabase();
-        setOnClickListener();
+        //setOnClickListener();
         mondayList = new ArrayList<>();
         mondayListAdapter = new TimetableEntryItemAdapter(getContext(), mondayList);
         listView.setAdapter(mondayListAdapter);
@@ -65,16 +71,22 @@ public class DayFragment extends Fragment {
         textView.setText("Monday");
 
 
+
+
         return layout;
     }
-
+    /*
     private void setOnClickListener(){
         buttonSwitchFragmentBackward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FridayFragment friday = new FridayFragment();
-                getFragmentManager().beginTransaction().replace(R.id.activityMainFragmentContainer, friday).addToBackStack(null).commit();
-
+                if(friday.isAdded()){
+                    getFragmentManager().beginTransaction().show(friday).commit();
+                }else {
+                    friday.onPause();
+                    getFragmentManager().beginTransaction().add(R.id.activityMainFragmentContainer, friday).commit();
+                }
 
 
             }
@@ -86,11 +98,13 @@ public class DayFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.activityMainFragmentContainer, tuesday).addToBackStack(null).commit();
             }
         });
+    }*/
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
     }
-
-
-
-
 
     @Override
     public void onResume(){
