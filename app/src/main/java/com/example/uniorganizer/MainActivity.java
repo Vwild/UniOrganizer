@@ -6,9 +6,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,8 +30,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private  static  final String DATABASE_NAME = "Stundenplan";
-
-
+    private static final String REMINDER_CHANNEL_ID = "reminder_channel";
+    private static final String CHANNEL_NAME = "My_reminder_channel";
+    private static final String CHANNEL_DESCRIPTION = "channel_for_reminder_notifications";
 
 
 
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        createNotificationChannel(CHANNEL_NAME,CHANNEL_DESCRIPTION);
 
 
         //Setzen von Referenzen der Objektvariablen auf die definierten Views des Layouts der Acitivity
@@ -98,6 +102,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+    }
+
+    private void createNotificationChannel(String channel_name, String channel_description) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = channel_name;
+            String description = channel_description;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(REMINDER_CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
 

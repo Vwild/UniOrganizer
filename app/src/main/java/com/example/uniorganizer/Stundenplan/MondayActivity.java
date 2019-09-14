@@ -1,6 +1,13 @@
 package com.example.uniorganizer.Stundenplan;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +24,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.uniorganizer.R;
+import com.example.uniorganizer.TimetableNotificationReciever;
 
 import java.util.ArrayList;
 
@@ -28,6 +36,10 @@ import java.util.List;
 public class MondayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
     public static final String DATABASE_NAME = "Stundenplan";
+    private static final String LECTURE_NAME = "lecture_name";
+    private static final String LECTURE_ROOM = "lecture_room";
+    private int REMINDER_ID = 0;
+    private static final String REMINDER_CHANNEL_ID = "reminder_channel";
 
     TextView textViewDay;
     TextView textViewHintAddLecture;
@@ -122,6 +134,49 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         Log.d(TAG, "run: ");
         timetableDatabase.daoAccess().insertOnlyOneElement(timetableDataElement);
     }
+
+    private void setNewNotification(String name, String room, int startH, int startMin, String weekday){
+        this.REMINDER_ID = this.REMINDER_ID+1;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK,7);
+        /*
+        switch (weekday){
+            case "Monday":
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                break;
+            case "Tuesday":
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+                break;
+            case "Wednesday":
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                break;
+            case "Thursday":
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+                break;
+            case "Friday":
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+                break;
+        }*/
+        calendar.set(Calendar.HOUR_OF_DAY, startH);
+        calendar.set(Calendar.MINUTE, startMin);
+        calendar.set(Calendar.SECOND, 0);
+
+        Intent notifyIntent = new Intent(getApplicationContext(), TimetableNotificationReciever.class);
+
+        notifyIntent.putExtra(LECTURE_NAME, name);
+        notifyIntent.putExtra(LECTURE_ROOM,room);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), REMINDER_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY*7,pendingIntent);
+
+
+    }
+
+
+
+
 
     private void initDaylist() {
         new Thread(new Runnable() {
@@ -223,9 +278,10 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
                 public void run() {
 
                     insertNewEntryIntoDB(lectureName, lectureRoom, beginningHour, beginningMinute, endingHour, endingMinute, weekday);
+
                 }
             }).start();
-
+            setNewNotification(lectureName,lectureRoom,beginningHour,beginningMinute,weekday);
             TimetableDataElement timetableElement = new TimetableDataElement();
             timetableElement.setLectureName(lectureName);
             timetableElement.setLectureLocation(lectureRoom);
