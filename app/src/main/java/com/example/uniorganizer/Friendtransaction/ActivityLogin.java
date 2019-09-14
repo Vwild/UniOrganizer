@@ -26,7 +26,7 @@ public class ActivityLogin extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
     private TextView register;
     private Button loginButton;
-    private ProgressDialog dialog;
+    private ProgressBar cycle;
 
     private FirebaseAuth firebaseAuth;
 
@@ -37,7 +37,7 @@ public class ActivityLogin extends AppCompatActivity {
         findViews();
         setOnClicklistener();
         firebaseAuth = FirebaseAuth.getInstance();
-        dialog = new ProgressDialog(ActivityLogin.this);
+
     }
 
     @Override
@@ -53,14 +53,15 @@ public class ActivityLogin extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editText_enter_password);
         register = findViewById(R.id.textView_register_link);
         loginButton = findViewById(R.id.button_login);
+        cycle = findViewById(R.id.progressBar_cycle);
     }
 
     private void setOnClicklistener() {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.setMessage("Please wait");
-                dialog.show();
+                ProgressBar cycle = findViewById(R.id.progressBar_cycle);
+                cycle.setVisibility(View.VISIBLE);
                 loginAccount();
             }
         });
@@ -68,6 +69,7 @@ public class ActivityLogin extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cycle.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(ActivityLogin.this,ActivityRegister.class);
                 startActivity(intent);
             }
@@ -82,11 +84,11 @@ public class ActivityLogin extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            dialog.dismiss();
+                            cycle.setVisibility(View.INVISIBLE);
                             Toast.makeText(ActivityLogin.this,"Logged in",Toast.LENGTH_SHORT);
                             finish();
                         }else{
-                            dialog.dismiss();
+                            cycle.setVisibility(View.INVISIBLE);
                             Toast.makeText(ActivityLogin.this,"Login failed",Toast.LENGTH_SHORT).show();
                         }
                     }
