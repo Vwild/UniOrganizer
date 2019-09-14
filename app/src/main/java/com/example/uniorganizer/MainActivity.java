@@ -21,6 +21,7 @@ import com.example.uniorganizer.Stundenplan.TimetableEntryItemAdapter;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected Button buttonFriends;
     protected Button buttonSwitchDayBackward;
     protected Button buttonSwitchDayForward;
-    private String weekday = "Monday";
+    private String weekday;
 
 
 
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initDatabase();
         createNotificationChannel(CHANNEL_NAME,CHANNEL_DESCRIPTION);
+        getCurrentDay();
 
 
         //Setzen von Referenzen der Objektvariablen auf die definierten Views des Layouts der Acitivity
@@ -180,8 +182,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }).start();
     }
 
-                private void createNotificationChannel (String channel_name, String
-                channel_description){
+    private void createNotificationChannel (String channel_name, String
+            channel_description){
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         CharSequence name = channel_name;
@@ -192,7 +194,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         NotificationManager notificationManager = getSystemService(NotificationManager.class);
                         notificationManager.createNotificationChannel(channel);
                     }
-                }
+    }
+
+    private void getCurrentDay(){
+        Calendar calendar = Calendar.getInstance();
+        int day= calendar.get(Calendar.DAY_OF_WEEK);
+        switch (day){
+            // Weekday=Monday bei Samstag und Sonntag, da man sich am Wochenende nur auf dem Kommenden montag einstellt und es dafür keine eigenen Stundenplaneinträge gibt
+            case Calendar.SUNDAY:
+                this.weekday = "Monday";
+                break;
+            case Calendar.MONDAY:
+                this.weekday = "Monday";
+                break;
+            case Calendar.TUESDAY:
+                this.weekday = "Tuesday";
+                break;
+            case Calendar.WEDNESDAY:
+                this.weekday = "Wednesday";
+                break;
+            case Calendar.THURSDAY:
+                this.weekday = "Thursday";
+                break;
+            case Calendar.FRIDAY:
+                this.weekday = "Friday";
+                break;
+            case Calendar.SATURDAY:
+                this.weekday = "Monday";
+        }
+
+
+    }
 
 
 
