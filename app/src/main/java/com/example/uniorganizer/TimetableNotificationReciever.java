@@ -46,6 +46,7 @@ public class TimetableNotificationReciever extends BroadcastReceiver {
         Reminder.setContentText("location:"+room);
         Reminder.setAutoCancel(true);
         Reminder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        Reminder.setSound(reminderSound);
 
         ReminderManager.notify(this.REMINDER_ID,Reminder.build());
 
