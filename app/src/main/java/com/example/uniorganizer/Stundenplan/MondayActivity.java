@@ -138,7 +138,6 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     private void setNewNotification(String name, String room, int startH, int startMin, String weekday){
         this.REMINDER_ID = this.REMINDER_ID+1;
         Calendar calendar = Calendar.getInstance();
-        //calendar.set(Calendar.DAY_OF_WEEK,7);
         switch (weekday){
             case "Monday":
                 calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);

@@ -42,7 +42,7 @@ public class TimetableNotificationReciever extends BroadcastReceiver {
         NotificationCompat.Builder Reminder = new NotificationCompat.Builder(context,REMINDER_CHANNEL_ID);
         Reminder.setContentIntent(pendingIntent);
         Reminder.setSmallIcon(R.drawable.ic_timetable_notification_icon);
-        Reminder.setContentTitle(name +" beginns in 15min");
+        Reminder.setContentTitle(name +" begins in 15min");
         Reminder.setContentText("location:"+room);
         Reminder.setAutoCancel(true);
         Reminder.setPriority(NotificationCompat.PRIORITY_HIGH);
