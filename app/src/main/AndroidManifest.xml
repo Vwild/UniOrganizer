@@ -22,7 +22,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+            // Code by Julian högerl
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
@@ -44,6 +44,7 @@
         <activity
             android:name=".Stundenplan.FridayActivity"
             android:label="Friday" />
+        // End by Julian Högerl
         <activity
             android:name=".Friendtransaction.FriendsActivity"
             android:label="Present at Uni ... " />

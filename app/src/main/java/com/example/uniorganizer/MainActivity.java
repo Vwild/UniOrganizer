@@ -110,14 +110,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     private void buttonTimetableClicked(){
+        //Button ruft EditTimetableActivity über Intent auf - Code by Julian Högerl
         Intent intentTimetable = new Intent(MainActivity.this, EditTimetableActivity.class);
         startActivity(intentTimetable);
     }
     private void buttonFriendsClicked(){
+        //Button ruft EditTimetableActivity über Intent auf - Code by Julian Högerl
         Intent intentFriends = new Intent(MainActivity.this, FriendsActivity.class);
         startActivity(intentFriends);
     }
     private void buttonSwitchDayBackwardClicked(){
+        //Abfrage welcher Tag auf Montag folgt etc. - Code by Julian Högerl
         switch (weekday){
             case "Monday":
                 this.weekday = "Friday";
@@ -135,12 +138,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.weekday = "Thursday";
                 break;
         }
+        //Den dementsprechenden Tag und zugehörige Liste aus der Datenbank anzeigen lassen - Code by Julian Högerl
         dayTextView.setText(weekday);
         timetable.clear();
         initTimetableList();
         adapter.notifyDataSetChanged();
     }
     private void buttonSwitchDayForwardClicked(){
+        //Abfrage welcher Tag auf Montag folgt etc. - Code by Julian Högerl
         switch (weekday){
             case "Monday":
                 this.weekday = "Tuesday";
@@ -158,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.weekday = "Monday";
                 break;
         }
+        //Den dementsprechenden Tag und zugehörige Liste aus der Datenbank anzeigen lassen - Code by Julian Högerl
         dayTextView.setText(weekday);
         timetable.clear();
         initTimetableList();

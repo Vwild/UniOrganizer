@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.uniorganizer.R;
 
+// Code by Julian Högerl
 public class EditTimetableActivity extends AppCompatActivity implements View.OnClickListener {
 
     protected Button buttonMonday;
