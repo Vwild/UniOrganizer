@@ -35,11 +35,14 @@ import java.util.List;
 
 public class MondayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
+    //Code By: Vincent Eichenseher
+    //Konstanten zur erstellung der Datenbank und Schlüsselwerte Für den Intent zu TimetableNotificationReciever
     public static final String DATABASE_NAME = "Stundenplan";
     private static final String LECTURE_NAME = "lecture_name";
     private static final String LECTURE_ROOM = "lecture_room";
     private int REMINDER_ID = 0;
-    private static final String REMINDER_CHANNEL_ID = "reminder_channel";
+    //Ende Code By: Vincent Eichenseher
+
 
     TextView textViewDay;
     TextView textViewHintAddLecture;
@@ -115,6 +118,9 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         listViewDay = (ListView) findViewById(R.id.listView_day);
     }
 
+    //Code By: Vincent Eichenseher
+
+    //Methode zum erstellen der Datenbank, welche sich durch .fallbackToDestructiveMigration() selbst beendet wenn zu einer anderen Activity gewechselt wird
     private void initDatabase() {
         timetableDatabase = Room.databaseBuilder(getApplicationContext(),
                 TimetableDatabase.class, DATABASE_NAME)
@@ -122,6 +128,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
                 .build();
     }
 
+    //Methode um eintrage in der Datenbank zu Speichern
     private void insertNewEntryIntoDB(String name, String room, int startH, int startMin, int endH, int endMin, String weekday) {
         TimetableDataElement timetableDataElement = new TimetableDataElement();
         timetableDataElement.setLectureName(name);
@@ -135,9 +142,14 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         timetableDatabase.daoAccess().insertOnlyOneElement(timetableDataElement);
     }
 
+    //Methode die Eine Neue Notification erstellt
     private void setNewNotification(String name, String room, int startH, int startMin, String weekday){
+        //ReminderID erhöht sich immer um 1 damit jede Notification eine einzigartige ID hatt.
         this.REMINDER_ID = this.REMINDER_ID+1;
+
         Calendar calendar = Calendar.getInstance();
+
+        //Instanz von Calendar Auf Vorlesungsbeginn setzen, und den Wochentag per Switch/Case abfrage setzen
         switch (weekday){
             case "Monday":
                 calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -156,31 +168,31 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
                 break;
         }
         calendar.set(Calendar.HOUR_OF_DAY, startH);
-        calendar.set(Calendar.MINUTE, startMin-14);
+        //startMin -15 sodass die Notification 15 min vor Vorlesungsbeginn kommt
+        calendar.set(Calendar.MINUTE, startMin-15);
         calendar.set(Calendar.SECOND, 0);
 
 
+        //Intent zur TimetableNotificationReciever klasse, es werden Name und Raumnummer übergeben
         Intent notifyIntent = new Intent(getApplicationContext(), TimetableNotificationReciever.class);
-
         notifyIntent.putExtra(LECTURE_NAME, name);
         notifyIntent.putExtra(LECTURE_ROOM,room);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), REMINDER_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
+        //Alarmanager,der zu der (in der Instanz von Calender) gesetzten Zeit den PendingIntent ausführt
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis() ,AlarmManager.INTERVAL_DAY*7,pendingIntent);
 
 
     }
 
-
-
-
-
+    //gibt eine Liste von TimetableDataElements zurück und informiert den Adapter das sich die anzuzeigenden Daten verändert haben
     private void initDaylist() {
         new Thread(new Runnable() {
         @Override
         public void run() {
+            //Neuer Thread zur kommunikation mit der Datenbank
             List<TimetableDataElement> entrylist = timetableDatabase.daoAccess().findLecturesByWeekday(weekday);
             dayList.addAll(entrylist);
             adapterDayList.notifyDataSetChanged();
@@ -188,10 +200,11 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }).start();
     }
 
+    //Methode um ein TimeTableDataElement aus der Datenbank zu löschen
     private void deleteEntryFromDB(TimetableDataElement timetableDataElement){
         timetableDatabase.daoAccess().deleteOnlyOneElement(timetableDataElement);
-
     }
+    //Ende Code By: Vincent Eichenseher
 
     private void setupViews(){
         initTimeView();
@@ -270,7 +283,11 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         String timeperiod = inputStartTime.getText().toString() + "-" + inputEndTime.getText().toString();
 
         if(!lectureName.isEmpty() && !lectureRoom.isEmpty() && !timeperiod.isEmpty()){
+
+            //Code By: Vincent Eichenseher
+            //Die Neue vorlesung in die Datenbank einfügen
             new Thread(new Runnable() {
+                //Neuer Tread zur kommunikation mit der datenbank
                 String lectureName = inputLectureName.getText().toString();
                 String lectureRoom = inputRoomNumber.getText().toString();
                 @Override
@@ -280,7 +297,10 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
 
                 }
             }).start();
+            //eine Neue Notification auf 15min vor Vorlesungsbeginn setzen
             setNewNotification(lectureName,lectureRoom,beginningHour,beginningMinute,weekday);
+            //Ende Code By: Vincent Eichenseher
+
             TimetableDataElement timetableElement = new TimetableDataElement();
             timetableElement.setLectureName(lectureName);
             timetableElement.setLectureLocation(lectureRoom);
@@ -305,13 +325,19 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         listViewDay.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
+
+                //Code By: Vincent Eichenseher
+                //Die Vorlesung auch aus der Datenbank Löschen
                 new Thread(new Runnable() {
+                    //Neuer Tread zur kommunikation mit der datenbank
                     TimetableDataElement entry = dayList.get(position);
                     @Override
                     public void run() {
                        deleteEntryFromDB(entry);
                     }
                 }).start();
+                //Ende Code By: Vincent Eichenseher
+
                 dayList.remove(position);
                 adapterDayList.notifyDataSetChanged();
                 return true;

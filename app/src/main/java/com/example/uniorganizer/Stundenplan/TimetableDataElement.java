@@ -5,6 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+//Code By: Vincent Eichenseher
+//Entität der Datenbank, die Alle zu speichernde Daten enthält und diesen jeweils eine ColumnInfo zur verfügung stellt, sodass diese über Queries in der Dao Klasse gefunden werden können
+
 @Entity
 public class TimetableDataElement {
 
@@ -18,7 +21,8 @@ public class TimetableDataElement {
     private String lectureLocation;
     @ColumnInfo(name = "week_day")
     private String weekDay;
-    //zeit als integer um probleme beim anzeigen in der Listview zu vermeiden
+
+    //zeit als integer um probleme beim anzeigen in der Listview zu vermeiden und
     @ColumnInfo(name = "beginning_hour")
     private int beginningHour;
     @ColumnInfo(name = "beginning_minute")

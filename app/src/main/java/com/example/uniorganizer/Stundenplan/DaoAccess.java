@@ -7,22 +7,13 @@ import androidx.room.Query;
 
 import java.util.List;
 
+//Code By: Vincent Eichenseher
+//Data Access Object zur Communication mit der Datenbank
+
 @Dao
 public interface DaoAccess {
 
-
-    @Query("SELECT * FROM timetabledataelement")
-    List<TimetableDataElement> getAll();
-
-    @Query("SELECT * FROM timetabledataelement WHERE timetableId IN(:timetableIds)")
-    List<TimetableDataElement>loadALllByIDs(int[] timetableIds);
-
-    @Query("SELECT * FROM timetabledataelement WHERE week_day LIKE :day")
-    List<TimetableDataElement> LoadAllLecturesByDay(String day);
-
-    @Query("SELECT * FROM timetabledataelement WHERE lecture_name LIKE :name")
-    TimetableDataElement findLectureByName(String name);
-
+    //Query die alle einträge für einen bestimmten Wochentag zurückgibt und nach beginnzeit sortiert
     @Query("SELECT*FROM timetabledataelement WHERE week_day LIKE :day ORDER BY beginning_hour ASC, beginning_minute ASC")
     List<TimetableDataElement> findLecturesByWeekday(String day);
 

@@ -25,15 +25,18 @@ import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    //Code By: Vincent Eichenseher
+    //Konstanten zur Erstellung der Datenbank und des NotificationChannels
     private  static  final String DATABASE_NAME = "Stundenplan";
-    private TimetableDatabase timetableDatabase;
     private static final String REMINDER_CHANNEL_ID = "reminder_channel";
     private static final String CHANNEL_NAME = "My_reminder_channel";
     private static final String CHANNEL_DESCRIPTION = "channel_for_reminder_notifications";
 
-
+    private TimetableDatabase timetableDatabase;
     private TimetableEntryItemAdapter adapter;
     private ArrayList<TimetableDataElement> timetable;
+    //Ende Code By: Vincent Eichenseher
 
     private ListView timetableListView;
     private TextView dayTextView;
@@ -161,12 +164,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter.notifyDataSetChanged();
     }
 
+    //Code By: Vincent Eichenseher
+
+    //Methode zum erstellen der Datenbank, welche sich durch .fallbackToDestructiveMigration() selbst beendet wenn zu einer anderen Activity gewechselt wird
     private void initDatabase() {
         timetableDatabase = Room.databaseBuilder(this.getApplicationContext(),
                 TimetableDatabase.class, DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .build();
     }
+
+    //gibt eine Liste von TimetableDataElements zurück und informiert den Adapter das sich die anzuzeigenden Daten verändert haben
     private void initTimetableList() {
 
         new Thread(new Runnable() {
@@ -182,9 +190,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }).start();
     }
 
+    //erstellen eines notificationChannels, damit die Notifications mit API level 26 und höher compatible sind, da hier die NotficationChannel classe nicht in der Support Library ist
     private void createNotificationChannel (String channel_name, String
             channel_description){
-
+        //if abfrage damit der notification Channel nur auf Geräten mit API level 26+ erstellt wird
+        //Quelle:https://developer.android.com/training/notify-user/channels
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         CharSequence name = channel_name;
                         String description = channel_description;
@@ -196,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
     }
 
+    //Methode die den aktuellen Wochentag zurückgibt, damit die MainActivity gleich bei den Einträgen für diesen wochentag startet
     private void getCurrentDay(){
         Calendar calendar = Calendar.getInstance();
         int day= calendar.get(Calendar.DAY_OF_WEEK);
@@ -225,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+    //Ende Code By: Vincent Eichenseher
 
 
 
