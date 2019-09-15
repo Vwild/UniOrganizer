@@ -41,21 +41,23 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     private int REMINDER_ID = 0;
     private static final String REMINDER_CHANNEL_ID = "reminder_channel";
 
-    TextView textViewDay;
-    TextView textViewHintAddLecture;
-    TextView textViewHintName;
-    TextView textViewHintRoom;
-    TextView textViewHintBeginning;
-    TextView textViewHintEnd;
-    EditText inputLectureName;
-    EditText inputRoomNumber;
-    EditText inputStartTime;
-    EditText inputEndTime;
-    Button buttonAddLecture;
-    Button buttonBack;
+    public TextView textViewDay;
+    public TextView textViewHintAddLecture;
+    public TextView textViewHintName;
+    public TextView textViewHintRoom;
+    public TextView textViewHintBeginning;
+    public TextView textViewHintEnd;
+    private EditText inputLectureName;
+    private EditText inputRoomNumber;
+    private EditText inputStartTime;
+    private EditText inputEndTime;
 
 
-    ListView listViewDay;
+    protected Button buttonAddLecture;
+    protected Button buttonBack;
+
+
+    private ListView listViewDay;
 
 
 
@@ -98,7 +100,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     public void setWeekday(String weekday) {
         this.weekday = weekday;
     }
-
+    // Code by Julian Högerl
     private void findViews() {
         textViewDay = (TextView) findViewById(R.id.textView_day);
         textViewHintAddLecture = (TextView) findViewById(R.id.textView_hint_add_lecture);
@@ -157,7 +159,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
                 break;
         }
         calendar.set(Calendar.HOUR_OF_DAY, startH);
-        calendar.set(Calendar.MINUTE, startMin-14);
+        calendar.set(Calendar.MINUTE, startMin-15);
         calendar.set(Calendar.SECOND, 0);
 
 
@@ -193,7 +195,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         timetableDatabase.daoAccess().deleteOnlyOneElement(timetableDataElement);
 
     }
-
+    // Code by Julian Högerl
     private void setupViews(){
         initTimeView();
         initListView();
@@ -212,7 +214,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
 
-
+    //Erstellen der beiden TimePicker Dialogen wenn die EditText-Felder geclickt wurden - Code by Julian Högerl
     private void initTimeView(){
         inputStartTime.setFocusable(false);
         inputStartTime.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +233,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         });
     }
 
-
+    //Einlesen der Variablen des TimePickerDialogStartTime und Abfrage welches Zeitformat auf dem Handy des Users eingestellt is und dementsprechend handeln - Code by Julian Högerl
     private TimePickerDialog createTimePickerDialogStartTime(){
 
         Calendar c = Calendar.getInstance();
@@ -240,6 +242,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         start = true;
         return new TimePickerDialog(this,this,hourOfDay, minute, DateFormat.is24HourFormat(this));
     }
+    //Einlesen der Variablen des TimePickerDialogEndTime und Abfrage welches Zeitformat auf dem Handy des Users eingestellt is und dementsprechend handeln - Code by Julian Högerl
     private TimePickerDialog createTimePickerDialogEndTime(){
 
         Calendar c = Calendar.getInstance();
@@ -250,7 +253,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
 
-
+    //Eingaben der EditText-Felder werden in Instanzvariablen gespeichert und die ausgewählte Zeit wird in den EditText-Feldern angezeigt  - Code by Julian Högerl
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if (start){
@@ -264,7 +267,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
         }
     }
 
-
+    //Hinzufügen der Vorlesung, falls keines der Eingabefelder leer ist und löschen der Eingabefelder nachdem hinzufügen erfolgt ist - Code by Julian Högerl, Interaktion mit Datenbank by Vincent Eichenseher
     private void addLectureToListView(){
         String lectureName = inputLectureName.getText().toString();
         String lectureRoom = inputRoomNumber.getText().toString();
@@ -298,7 +301,7 @@ public class MondayActivity extends AppCompatActivity implements TimePickerDialo
             inputEndTime.setText("");
         }
     }
-
+    //Anzeigen der Stundenplanliste und Löschen von Vorlesungen durch onItemLongClick aus Liste und Datenbank  - Code by Julian Högerl, Interaktion mit Datenbank by Vincent Eichenseher
     private void initListView(){
         dayList = new ArrayList<>();
         adapterDayList = new TimetableEntryItemAdapter(this, dayList);

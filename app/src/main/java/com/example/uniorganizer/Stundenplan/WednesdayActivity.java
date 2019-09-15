@@ -1,8 +1,8 @@
 package com.example.uniorganizer.Stundenplan;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 
+//Alle anderen WochentagActivities erben von der MondayActivity, nur textViewDay wird dementsprechend angepasst - Code by Julian Högerl
 public class WednesdayActivity extends TuesdayActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
